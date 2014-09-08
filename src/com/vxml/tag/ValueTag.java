@@ -10,9 +10,11 @@ public class ValueTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-		String expr = getAttribute("expr");
-		Object value = executeScript(expr + ";");
-		System.out.println(value);
+	    if (getNode().getParentNode().getNodeName().equals("prompt")) {
+	        String expr = getAttribute("expr");
+	        Object value = executeScript(expr + ";");
+	        System.out.println(value);
+	    }
 	}
 
 }

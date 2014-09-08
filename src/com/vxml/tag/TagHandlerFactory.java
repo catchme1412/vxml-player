@@ -5,7 +5,8 @@ import org.w3c.dom.Node;
 public class TagHandlerFactory {
 
 	public static Tag getTag(Node node) {
-//		System.out.println("<<<<<" + node.getNodeType() + ":"+ node );
+//		System.out.println(node.getNodeName() + AbstractTag.nodeToString(node));
+	    System.out.println(node.getNodeName());
 		
 		if (node.getNodeType() == Node.TEXT_NODE) {
 			return new TextTag(node);
@@ -21,7 +22,9 @@ public class TagHandlerFactory {
 			return new GotoTag(node);
 		} else if (nodeName.equals("prompt")) {
 			return new PromptTag(node);
-		} else if (nodeName.equals("field")) {
+		} else if (nodeName.equals("script")) {
+            return new ScriptTag(node);
+        } else if (nodeName.equals("field")) {
 			return new FieldTag(node);
 		} else if (nodeName.equals("filled")) {
 			return new FilledTag(node);
@@ -31,7 +34,16 @@ public class TagHandlerFactory {
 			return new NoMatchTag(node);
 		} else if (nodeName.equals("catch")) {
 			return new CatchTag(node);
-		}
+		} else if (nodeName.equals("audio")) {
+            return new AudioTag(node);
+        } else if (nodeName.equals("assign")) {
+            return new AssignTag(node);
+        } else if (nodeName.equals("choice")) {
+            return new ChoiceTag(node);
+            //checks for cisco-data tag as well
+        } else if (nodeName.endsWith("data")) {
+            return new DataTag(node);
+        } 
 		
 		return new NoActionTag(node);
 	}

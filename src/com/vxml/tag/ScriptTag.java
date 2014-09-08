@@ -1,8 +1,5 @@
 package com.vxml.tag;
 
-import java.io.IOException;
-import java.util.Scanner;
-
 import org.w3c.dom.Node;
 
 public class ScriptTag extends AbstractTag {
@@ -13,22 +10,20 @@ public class ScriptTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-		try {
-			Scanner in = new Scanner(System.in);
-			String value = in.next();
-			System.out.println(value);
-			String fieldName = getFieldName();
-			executeScript("var " + fieldName + "=" + value + ";");
-			System.out.println(">>>>>>>>>>>>>>"+executeScript(fieldName +";"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//	    System.out.println(AbstractTag.nodeToString(getNode()));
+	    String src = getAttribute("src");
+	    if (src != null) {
+	        src = VxmlPlayer.context.getDocBase() + src;
+	        StringBuilder script = new UrlFetchService().fetch(src);
+	        executeScript(script.toString());
+	        System.out.println("MMMMMMMMMMMMMM"+ executeScript("history_stack;"));
+	    } else {
+	        executeScript(getNode().getTextContent());
+	    }
 	}
 
 	private String getFieldName() {
 		return getNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
 	}
-
 
 }

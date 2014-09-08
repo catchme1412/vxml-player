@@ -15,12 +15,12 @@ public class VxmlTag extends AbstractTag {
 		String application = getAttribute("application");
 		if(application != null) {
 			new VxmlDoc(application).play();
-		} else {
-			NodeList children = getNode().getChildNodes();
-			for (int i=0 ; i< children.getLength(); i++) {
-				Tag tag = TagHandlerFactory.getTag(children.item(i));
-				tag.execute();
-			}
+		}
+		//after processing the app_root, start processing this document (goes to stack first)
+		NodeList children = getNode().getChildNodes();
+		for (int i=0 ; i< children.getLength(); i++) {
+		    Tag tag = TagHandlerFactory.getTag(children.item(i));
+		    tag.execute();
 		}
 	}
 

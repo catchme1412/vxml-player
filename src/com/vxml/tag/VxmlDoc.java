@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
@@ -14,8 +13,6 @@ public class VxmlDoc {
 
 	private Document doc;
 	private DocumentStore documentStore;
-	private String docBase = "http://localhost:8080/javascript/";
-
 	public VxmlDoc(Document doc) {
 		this.doc = doc;
 	}
@@ -23,19 +20,24 @@ public class VxmlDoc {
 	public VxmlDoc(String uriLink) {
 		URI uri;
 		try {
-
-			uri = new URI(uriLink);
-			if (uri.getScheme() == null) {
-				uri = new URI(docBase + uriLink);
-			}
+			uri = getFullUri(uriLink);
 
 			documentStore = new DocumentStore();
 			this.doc = documentStore.getDoc(uri);
+			
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+    private URI getFullUri(String uriLink) throws URISyntaxException {
+        URI uri;
+        uri = new URI(uriLink);
+        if (uri.getScheme() == null) {
+        	uri = new URI(VxmlPlayer.context.getDocBase() + uriLink);
+        }
+        return uri;
+    }
 
 	public void play() {
 		NodeIterator ni = ((DocumentTraversal) doc).createNodeIterator(

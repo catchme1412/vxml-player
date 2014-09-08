@@ -1,6 +1,4 @@
 package com.vxml.tag;
-import javax.script.ScriptException;
-
 import org.w3c.dom.Node;
 
 
@@ -13,6 +11,8 @@ public class FormTag extends AbstractTag {
 
 	@Override
 	public void execute() {
+	    String id = getAttribute("id");
+	    storeTag(id, this);
 	}
 
 }

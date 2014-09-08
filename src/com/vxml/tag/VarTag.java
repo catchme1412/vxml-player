@@ -6,15 +6,18 @@ import org.w3c.dom.Node;
 
 public class VarTag extends AbstractTag {
 
-	public VarTag(Node node) {
-		super(node);
-	}
+    public VarTag(Node node) {
+        super(node);
+    }
 
-	@Override
+    @Override
 	public void execute() {
 //		System.out.println(getAttribute("name"));
-		executeScript("var " + getAttribute("name"));
-
+		String name = getAttribute("name");
+        executeScript("var " + name + ";");
+		String value = getAttribute("expr");
+		if (value != null) {
+		    executeScript(name+"=" +value+";");
+		}
 	}
-
 }
