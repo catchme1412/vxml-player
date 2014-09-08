@@ -14,8 +14,6 @@ import org.w3c.dom.NodeList;
 public abstract class AbstractTag implements Tag {
 
 	private static VxmlContext context = new VxmlContext() ;
-	private static final ScriptEngineManager manager = new ScriptEngineManager();
-	private static ScriptEngine engine = manager.getEngineByName("js");
 	private static Map propertyMap = new HashMap();
 	
 	private Node node;
@@ -25,21 +23,21 @@ public abstract class AbstractTag implements Tag {
 	}
 
 	public void performTag() {
-		if(node.getNodeType() == Node.ELEMENT_NODE) {
-			System.out.println("Running:" + node.getNodeName());
+//		if(node.getNodeType() == Node.ELEMENT_NODE) {
+//			System.out.println("Running:" + node.getNodeName());
+//			System.out.println(node);
 			execute();
-		}
+//		}
 	}
 	
-	public void executeJavascript(String script) throws ScriptException {
-		engine.eval(script);
+	public Object executeScript(String script) {
+		return context.executeScript(script);
 	}
-
+	
 	@Override
 	public Node getNode() {
 		return node;
 	}
-	
 	
 	public void setProperty(String property, String value) {
 		propertyMap.put(property, value);

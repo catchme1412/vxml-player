@@ -10,7 +10,7 @@ public class NoActionTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-		System.out.println("No action:" + getNode().getNodeName());
+//		System.out.println("No action:" + getNode().getNodeName());
 	}
 
 }

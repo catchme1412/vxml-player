@@ -1,12 +1,11 @@
 package com.vxml.tag;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Logger;
@@ -18,7 +17,9 @@ public class UrlFetchService {
 
 	public InputStream fetchInputStream(URI uri) throws IOException {
 		URL url = uri.toURL();
+		CookieHandler.setDefault( new CookieManager( null, CookiePolicy.ACCEPT_ALL ) );
 		URLConnection connection = url.openConnection();
+		System.out.println("JSESSIONID:" + connection.getHeaderField("jsessionid"));
 		logger.info("URL: " + url.toExternalForm());
 		return connection.getInputStream();
 	}

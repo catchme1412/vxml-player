@@ -1,9 +1,8 @@
 package com.vxml.tag;
+
 import org.w3c.dom.Node;
 
-
 public class FieldTag extends AbstractTag {
-
 
 	public FieldTag(Node node) {
 		super(node);
@@ -11,8 +10,9 @@ public class FieldTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-		System.out.println(getAttribute("name"));
-		super.execute();
+		String name = getAttribute("name");
+		executeScript("var " + name +";");
+		System.out.println(name);
 	}
 
 }

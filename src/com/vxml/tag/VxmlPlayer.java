@@ -18,5 +18,4 @@ public class VxmlPlayer {
 		new VxmlPlayer("http://localhost:8080/javascript/index.html").start();
 	}
 
-	
 }
