@@ -30,7 +30,9 @@ public class IfTag extends AbstractTag {
 				} while (isBlockIndicator(n));
 				return;
 			} else {
-				while(isBlockIndicator(n));
+				while(!isBlockIndicator(n)) {
+					n = children.item(index++);
+				}
 				Tag tag = TagHandlerFactory.getTag(n);
 				((AbstractTag)tag).performTag();
 			}

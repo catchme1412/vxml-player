@@ -24,6 +24,7 @@ public abstract class AbstractTag implements Tag {
 	protected static boolean isSkip;
 
 	protected static int ifTagCount;
+	protected static int forEachTagCount;
 
 	private static Map<String, Tag> tagRef = new HashMap<String, Tag>();
 
@@ -39,9 +40,13 @@ public abstract class AbstractTag implements Tag {
 			System.out.println(">>>>>>>>>>>>EXITING IF");
 			ifTagCount--;
 		}
+		if (previousTag != null && "foreach".equals(previousTag.getNodeName())) {
+			System.out.println(">>>>>>>>>>>>EXITING ForEach");
+			forEachTagCount--;
+		}
 		// if not inside an if tag, then execute. Items inside if tags are
 		// executed in IfTag.java
-		if (ifTagCount == 0) {
+		if (ifTagCount == 0 && forEachTagCount == 0) {
 			execute();
 		}
 	}

@@ -2,12 +2,11 @@ package com.vxml.core;
 
 import com.vxml.tag.VxmlDoc;
 
-
 public class VxmlPlayer {
 
 	private String entryUrl;
-    public static VxmlContext context = new VxmlContext() ;
-	
+	public static VxmlContext context = new VxmlContext();
+
 	public VxmlPlayer(String entryPointUrl) {
 		entryUrl = entryPointUrl;
 	}
@@ -17,7 +16,7 @@ public class VxmlPlayer {
 			VxmlDoc doc = new VxmlDoc(entryUrl);
 			doc.play();
 		} finally {
-//			DocumentStore.close();
+			// DocumentStore.close();
 		}
 	}
 

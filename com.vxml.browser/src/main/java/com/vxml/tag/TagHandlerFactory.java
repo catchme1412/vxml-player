@@ -46,6 +46,8 @@ public class TagHandlerFactory {
             return new IfTag(node);
         } else if (nodeName.equals("elseif")) {
             return new ElseIfTag(node);
+        } else if (nodeName.equals("foreach")) {
+            return new ForEachTag(node);
         } else if (nodeName.equals("else")) {
             return new ElseTag(node);
         } else if (nodeName.equals("choice")) {
