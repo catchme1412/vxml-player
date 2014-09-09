@@ -49,7 +49,7 @@ public class DocumentStore {
 			DocumentBuilder builder = domFactory.newDocumentBuilder();
 			doc = builder.parse(is);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("FAILED TO FETCH:" + uri);
 		} finally {
 			try {
 				is.close();

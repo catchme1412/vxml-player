@@ -1,6 +1,8 @@
 package com.vxml.tag;
 import org.w3c.dom.Node;
 
+import com.vxml.tag.logic.ElseIfTag;
+import com.vxml.tag.logic.ElseTag;
 import com.vxml.tag.logic.IfTag;
 
 
@@ -8,7 +10,7 @@ public class TagHandlerFactory {
 
 	public static Tag getTag(Node node) {
 //		System.out.println(node.getNodeName() + AbstractTag.nodeToString(node));
-//	    System.out.println(node.getNodeName());
+	    System.out.println(node.getNodeName());
 		
 		if (node.getNodeType() == Node.TEXT_NODE) {
 			return new TextTag(node);
@@ -42,6 +44,10 @@ public class TagHandlerFactory {
             return new AssignTag(node);
         }  else if (nodeName.equals("if")) {
             return new IfTag(node);
+        } else if (nodeName.equals("elseif")) {
+            return new ElseIfTag(node);
+        } else if (nodeName.equals("else")) {
+            return new ElseTag(node);
         } else if (nodeName.equals("choice")) {
             return new ChoiceTag(node);
             //checks for cisco-data tag as well

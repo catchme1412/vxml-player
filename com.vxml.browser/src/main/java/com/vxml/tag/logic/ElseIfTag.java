@@ -14,8 +14,8 @@ public class ElseIfTag extends AbstractTag {
 	public void execute() {
 		String cond = getAttribute("cond");
 		Boolean isTrue = (Boolean)executeScript(cond + ";");
-		if (!isTrue) {
-            isSkip = !isSkip;
+		if (isTrue) {
+            executeChildNodes();
         }
 	}
 

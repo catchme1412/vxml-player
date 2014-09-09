@@ -12,7 +12,7 @@ public class VxmlContext {
 
 	private ScriptEngineManager manager;
 	private ScriptEngine engine;
-	private String docBase = "http://localhost:8585";
+	private String docBase = "http://localhost:8080/javascript/";
 	
 	
 	public VxmlContext() {

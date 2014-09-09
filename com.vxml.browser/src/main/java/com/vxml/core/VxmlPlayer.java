@@ -13,12 +13,16 @@ public class VxmlPlayer {
 	}
 
 	public void start() throws Exception {
-		VxmlDoc doc = new VxmlDoc(entryUrl);
-		doc.play();
+		try {
+			VxmlDoc doc = new VxmlDoc(entryUrl);
+			doc.play();
+		} finally {
+//			DocumentStore.close();
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
-		new VxmlPlayer("http://localhost:8585/ivr/testing/sao.vxml").start();
+		new VxmlPlayer("http://localhost:8080/javascript/index.html").start();
 	}
 
 }

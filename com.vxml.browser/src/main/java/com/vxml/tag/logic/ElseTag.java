@@ -14,6 +14,8 @@ public class ElseTag extends AbstractTag {
 	public void execute() {
 		String cond = getAttribute("cond");
 		Boolean isTrue = (Boolean)executeScript(cond + ";");
-        isSkip = false;
+		if (isTrue) {
+            executeChildNodes();
+        }
 	}
 }
