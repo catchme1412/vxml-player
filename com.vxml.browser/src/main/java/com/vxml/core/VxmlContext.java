@@ -1,4 +1,4 @@
-package com.vxml.tag;
+package com.vxml.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +12,8 @@ public class VxmlContext {
 
 	private ScriptEngineManager manager;
 	private ScriptEngine engine;
-	private String docBase = "http://localhost:8585";
+	private String docBase = "http://localhost:8080/javascript/";
+	
 	
 	public VxmlContext() {
 	    manager = new ScriptEngineManager();
@@ -22,7 +23,6 @@ public class VxmlContext {
             System.out.println(executeScript("application.UUID;"));
             engine.eval("var C1;var C2;var C3;var C4;var C5;var C6;var C7;var C8;var C9;var C10;");
         } catch (ScriptException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 	}
@@ -30,7 +30,6 @@ public class VxmlContext {
 		try {
 			return engine.eval(script);
 		} catch (ScriptException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -39,11 +38,7 @@ public class VxmlContext {
 	public Object executeScript(File file) {
 	    try {
             return engine.eval(new FileReader(file));
-        } catch (ScriptException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

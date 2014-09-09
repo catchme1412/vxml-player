@@ -12,7 +12,9 @@ public class FormTag extends AbstractTag {
 	@Override
 	public void execute() {
 	    String id = getAttribute("id");
-	    storeTag(id, this);
+	    if(id != null) {
+	    	storeTag(id, this);
+	    }
 	}
 
 }

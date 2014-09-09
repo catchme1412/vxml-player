@@ -10,6 +10,7 @@ public class TextTag extends AbstractTag {
 
 	@Override
 	public void execute() {
+		System.out.println(getNode().getTextContent().trim());
 		if (!getNode().getTextContent().trim().isEmpty() && getNode().getParentNode().getNodeName().equals("prompt")) {
 			System.out.println(getNode().getTextContent().trim());
 		}

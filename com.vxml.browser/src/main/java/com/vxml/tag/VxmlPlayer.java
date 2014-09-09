@@ -1,5 +1,7 @@
 package com.vxml.tag;
 
+import com.vxml.core.VxmlContext;
+
 
 public class VxmlPlayer {
 
@@ -16,7 +18,7 @@ public class VxmlPlayer {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new VxmlPlayer("http://localhost:8585/ivr/testing/sao.vxml").start();
+		new VxmlPlayer("http://localhost:8080/javascript/index.html").start();
 	}
 
 }

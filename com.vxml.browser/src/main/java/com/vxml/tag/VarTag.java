@@ -1,7 +1,5 @@
 package com.vxml.tag;
 
-import javax.script.ScriptException;
-
 import org.w3c.dom.Node;
 
 public class VarTag extends AbstractTag {

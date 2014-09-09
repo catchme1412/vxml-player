@@ -17,11 +17,7 @@ public class VxmlTag extends AbstractTag {
 			new VxmlDoc(application).play();
 		}
 		//after processing the app_root, start processing this document (goes to stack first)
-		NodeList children = getNode().getChildNodes();
-		for (int i=0 ; i< children.getLength(); i++) {
-		    Tag tag = TagHandlerFactory.getTag(children.item(i));
-		    tag.execute();
-		}
+		executeChildNodes();
 	}
 
 }

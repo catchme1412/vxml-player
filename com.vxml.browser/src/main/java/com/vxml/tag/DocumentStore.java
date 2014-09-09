@@ -1,16 +1,29 @@
 package com.vxml.tag;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
+import com.vxml.http.HttpCaller;
+
 
 public class DocumentStore {
 
+	private static HttpCaller httpCaller;
+	
+	public DocumentStore() {
+		if (httpCaller == null) {
+			httpCaller = new HttpCaller();
+			httpCaller.startSession();
+		}
+	}
+	
 	public VxmlDoc get(URI uri) {
 		try {
 			Document doc = getDoc(uri);
@@ -27,19 +40,19 @@ public class DocumentStore {
 		InputStream is =null;
 		Document doc = null;
 		try {
-			is = new UrlFetchService().fetchInputStream(uri);
+			String result = httpCaller.doGet(uri.toString());
+			is = new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8));
+//			is = new UrlFetchService().fetchInputStream(uri);
 			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 			domFactory.setNamespaceAware(true);
 			DocumentBuilder builder = domFactory.newDocumentBuilder();
 			doc = builder.parse(is);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				is.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
