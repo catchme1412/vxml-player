@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<vxml version="2.1" application="/ivr/service/wl2/app_root.vxml">
+
+	<form id="greetingForm">
+
+		<property name="bargein" value="false"/>
+
+		<!-- fetch the data, the actual xml data source will be determined
+server side based on seg type -->
+		<var name="dtype" expr="'gr'"/>
+		<!--<var name="dnis" expr="session.telephone.dnis"/>-->
+		<var name="dnis" expr="application.DNIS"/>
+
+		<block>
+			<if cond="( (CALL_GROUPING=='VIP' &amp;&amp; MEMBERSHIP_LEVEL != 'SILVER' )|| MEMBERSHIP_LEVEL == 'LOYL_TRANSFERS')">
+				<prompt>
+					<audio expr="'http://ivraudio.orbitz.net/orbitz/ui/orb_en_us/greeting/silver.wav'">
+	                    Welcome to Orbitz Rewards. Thank you for being a Member.
+	                </audio>
+				</prompt>
+
+			<elseif cond="CALL_GROUPING == 'HOTEL'"/>
+				<prompt>
+					<audio expr="'http://ivraudio.orbitz.net/orbitz/ui/tp/prompt_record.wav'">
+				        For quality, your call may be monitored or recorded.
+				    </audio>
+				</prompt>
+				<goto next="/ivr/service/wl2/ORB/en_US/hotelier_menu.vxml"/>
+			<elseif cond="MEMBERSHIP_LEVEL == 'SILVER'"/>
+				<prompt>
+					<audio expr="'http://ivraudio.orbitz.net/orbitz/ui/orb_en_us/greeting/silver.wav'">
+				        Welcome to Orbitz Rewards. Thank you for being a Silver Member.
+				   	</audio>
+				</prompt>
+
+				<elseif cond="MEMBERSHIP_LEVEL == 'GOLD'"/>
+				<prompt>
+					<audio expr="'http://ivraudio.orbitz.net/orbitz/ui/orb_en_us/greeting/gold.wav'">
+				        Welcome to Orbitz Rewards. Thank you for being a Gold Member.
+				    </audio>
+				</prompt>
+
+				<elseif cond="MEMBERSHIP_LEVEL == 'PLATINUM'"/>
+				<prompt>
+					<audio expr="'http://ivraudio.orbitz.net/orbitz/ui/orb_en_us/greeting/platinum.wav'">
+						Welcome to Orbitz Rewards. Thank you for being a Platinum Member.
+					</audio>
+				</prompt>
+
+			<else/>
+				<prompt>
+					<audio expr="'http://ivraudio.orbitz.net/orbitz/redesigned-phaseI/ORB/en_US/greeting/orb-welcome-jingle.wav'">
+	                    Welcome to Orbitz! For quality this call may be monitored or recorded. 
+	                </audio>
+				</prompt>
+
+			</if>
+
+			<goto next="/ivr/service/wl2/ORB/en_US/lang_select_menu.vxml"/>
+
+		</block>
+
+	</form>
+
+</vxml>
+
