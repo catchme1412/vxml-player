@@ -1,11 +1,13 @@
 package com.vxml.tag;
 import org.w3c.dom.Node;
 
+import com.vxml.tag.logic.IfTag;
+
 
 public class TagHandlerFactory {
 
 	public static Tag getTag(Node node) {
-		System.out.println(node.getNodeName() + AbstractTag.nodeToString(node));
+//		System.out.println(node.getNodeName() + AbstractTag.nodeToString(node));
 //	    System.out.println(node.getNodeName());
 		
 		if (node.getNodeType() == Node.TEXT_NODE) {
@@ -38,6 +40,8 @@ public class TagHandlerFactory {
             return new AudioTag(node);
         } else if (nodeName.equals("assign")) {
             return new AssignTag(node);
+        }  else if (nodeName.equals("if")) {
+            return new IfTag(node);
         } else if (nodeName.equals("choice")) {
             return new ChoiceTag(node);
             //checks for cisco-data tag as well

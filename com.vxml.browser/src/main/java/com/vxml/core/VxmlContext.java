@@ -12,14 +12,14 @@ public class VxmlContext {
 
 	private ScriptEngineManager manager;
 	private ScriptEngine engine;
-	private String docBase = "http://localhost:8080/javascript/";
+	private String docBase = "http://localhost:8585";
 	
 	
 	public VxmlContext() {
 	    manager = new ScriptEngineManager();
 	    engine = manager.getEngineByName("js");
 	    try {
-            engine.eval("var application={};application.ANI='100'; application.UUID='1ECA9F03DD8E11E28505B0FAEB421300';");
+            engine.eval("var application={};application.ANI='8773366233'; application.UUID='1ECA9F03DD8E11E28505B0FAEB421300';");
             System.out.println(executeScript("application.UUID;"));
             engine.eval("var C1;var C2;var C3;var C4;var C5;var C6;var C7;var C8;var C9;var C10;");
         } catch (ScriptException e) {

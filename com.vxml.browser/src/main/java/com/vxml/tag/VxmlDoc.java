@@ -9,6 +9,8 @@ import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
 
+import com.vxml.core.VxmlPlayer;
+
 public class VxmlDoc {
 
 	private Document doc;

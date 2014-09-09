@@ -1,6 +1,5 @@
 package com.vxml.tag;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 
 public class VxmlTag extends AbstractTag {

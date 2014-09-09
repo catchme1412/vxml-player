@@ -2,6 +2,9 @@ package com.vxml.tag;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -38,14 +41,26 @@ public class AePlayWave extends Thread {
     public void run() {
 
         File soundFile = new File(filename);
-        if (!soundFile.exists()) {
-            System.err.println("Wave file not found: " + filename);
-            return;
+        InputStream in = null;
+        try {
+            URL url = new URL(filename);
+            in = new UrlFetchService().fetchInputStream(url);
+        } catch (MalformedURLException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        
+//        if (!soundFile.exists()) {
+//            System.err.println("Wave file not found: " + filename);
+//            return;
+//        }
 
         AudioInputStream audioInputStream = null;
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+            audioInputStream = AudioSystem.getAudioInputStream(in);
         } catch (UnsupportedAudioFileException e1) {
             e1.printStackTrace();
             return;

@@ -15,7 +15,7 @@ public class AssignTag extends AbstractTag {
 	    if (expr == null) {
 	        executeScript("var " + name + ";");
 	    } else {
-	        executeScript("var " + name + "=" + expr + ";");
+	        executeScript(name + "=" + expr + ";");
 	    }
 		
 	}

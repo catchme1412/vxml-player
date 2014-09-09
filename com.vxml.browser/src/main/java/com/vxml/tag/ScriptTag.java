@@ -2,6 +2,8 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
+import com.vxml.core.VxmlPlayer;
+
 public class ScriptTag extends AbstractTag {
 
 	public ScriptTag(Node node) {
@@ -16,7 +18,7 @@ public class ScriptTag extends AbstractTag {
 	        src = VxmlPlayer.context.getDocBase() + src;
 	        StringBuilder script = new UrlFetchService().fetch(src);
 	        executeScript(script.toString());
-	        System.out.println("MMMMMMMMMMMMMM"+ executeScript("history_stack;"));
+//	        System.out.println("MMMMMMMMMMMMMM"+ executeScript("history_stack;"));
 	    } else {
 	        executeScript(getNode().getTextContent());
 	    }

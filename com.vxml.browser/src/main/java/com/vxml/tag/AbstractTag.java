@@ -15,10 +15,14 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.vxml.core.VxmlPlayer;
+
 
 public abstract class AbstractTag implements Tag {
 
 	private static Map propertyMap = new HashMap();
+	
+	protected static boolean isSkip;
 	
 	private static Map<String, Tag> tagRef = new HashMap<String, Tag>();
 	
@@ -68,6 +72,7 @@ public abstract class AbstractTag implements Tag {
 	    for(int i = 0; i < list.getLength(); i++) {
 	        Node n = list.item(i);
 	        Tag tag = TagHandlerFactory.getTag(n);
+//	        System.out.println(nodeToString(tag.getNode()));
             ((AbstractTag) tag).performTag();
 	    }
 	}

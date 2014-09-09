@@ -2,6 +2,8 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
+import com.vxml.core.VxmlPlayer;
+
 
 public class DataTag extends AbstractTag {
 
