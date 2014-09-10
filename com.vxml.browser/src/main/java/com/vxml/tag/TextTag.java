@@ -22,7 +22,8 @@ public class TextTag extends AbstractTag {
 
 		if (!text.isEmpty()
 				&& (getNode().getParentNode().getNodeName().equals("foreach") || getNode()
-						.getParentNode().getNodeName().equals("prompt"))
+						.getParentNode().getNodeName().equals("prompt") || getNode()
+						.getParentNode().getNodeName().equals("audio"))
 				&& !getNode().getParentNode().getNodeName().equals("script")) {
 			System.out.println("PROMPT:>>>>>>>>>>>>>>>>>>>>>>" + text);
 			try {

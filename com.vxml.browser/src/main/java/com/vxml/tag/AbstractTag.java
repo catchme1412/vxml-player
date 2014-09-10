@@ -12,6 +12,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -21,9 +22,9 @@ public abstract class AbstractTag implements Tag {
 
 	private static Map propertyMap = new HashMap();
 
-	protected static boolean isSkip;
+	protected static boolean isSkipTag;
 
-	protected static int ifTagCount;
+	protected static int ifTagLevel;
 	protected static int forEachTagCount;
 
 	private static Map<String, Tag> tagRef = new HashMap<String, Tag>();
@@ -35,20 +36,44 @@ public abstract class AbstractTag implements Tag {
 	}
 
 	public void performTag() {
+
 		Node previousTag = node.getPreviousSibling();
 		if (previousTag != null && "if".equals(previousTag.getNodeName())) {
 			System.out.println(">>>>>>>>>>>>EXITING IF");
-			ifTagCount--;
+			ifTagLevel--;
+			if (ifTagLevel == 0) {
+				isSkipTag = false;
+			}
 		}
-		if (previousTag != null && "foreach".equals(previousTag.getNodeName())) {
-			System.out.println(">>>>>>>>>>>>EXITING ForEach");
-			forEachTagCount--;
-		}
+		// if (previousTag != null &&
+		// "foreach".equals(previousTag.getNodeName())) {
+		// System.out.println(">>>>>>>>>>>>EXITING ForEach");
+		// forEachTagCount--;
+		// }
 		// if not inside an if tag, then execute. Items inside if tags are
 		// executed in IfTag.java
-		if ((ifTagCount == 0 && forEachTagCount == 0) || "elseif".equals(node.getNodeName())) {
+		if (!isSkipTag || isLogicalTag()) {
 			execute();
 		}
+	}
+
+	private boolean isLogicalTag() {
+		return "elseif".equals(node.getNodeName()) || "else".equals(node.getNodeName());
+	}
+
+	public boolean isCorrespondingIfConditionIsTrue() {
+		Boolean isIfConditionTrue = false;
+
+		try {
+			isIfConditionTrue = (Boolean) executeScript("IF_CONDITION_LEVEL_" + ifTagLevel + ";");
+			System.out.println("IF_CONDITION_LEVEL_" + ifTagLevel + "=" + isIfConditionTrue);
+			if (isIfConditionTrue) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public Object executeScript(String script) {
@@ -83,12 +108,35 @@ public abstract class AbstractTag implements Tag {
 
 	public void executeChildNodes() {
 		NodeList list = node.getChildNodes();
-		System.out.println(nodeToString(getNode()));
 		for (int i = 0; i < list.getLength(); i++) {
 			Node n = list.item(i);
 			Tag tag = TagHandlerFactory.getTag(n);
 			// System.out.println(nodeToString(tag.getNode()));
 			((AbstractTag) tag).performTag();
+		}
+	}
+
+	@Override
+	public void executeChildTree(Node startNode) {
+		if (startNode == null) {
+			System.out.println("Nothing to print!!");
+			return;
+		}
+		try {
+			// Tag tag = TagHandlerFactory.getTag(startNode);
+			// ((AbstractTag)tag).execute();
+
+			NodeList nl = startNode.getChildNodes();
+			if (nl != null) {
+				for (int i = 0; i < nl.getLength(); i++) {
+					Node node = nl.item(i);
+					Tag tag = TagHandlerFactory.getTag(node);
+					((AbstractTag) tag).performTag();
+					executeChildTree(node);
+				}
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
 	}
 

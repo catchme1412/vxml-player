@@ -1,15 +1,16 @@
 package com.vxml.tag;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.http.client.ClientProtocolException;
 import org.w3c.dom.Document;
-
-import sun.nio.cs.StandardCharsets;
 
 import com.vxml.http.HttpCaller;
 
@@ -41,8 +42,7 @@ public class DocumentStore {
 		InputStream is =null;
 		Document doc = null;
 		try {
-			String result = httpCaller.doGet(uri.toString());
-			is = new ByteArrayInputStream(result.getBytes());
+			is = getInputStream(uri);
 //			is = new UrlFetchService().fetchInputStream(uri);
 			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 			domFactory.setNamespaceAware(true);
@@ -58,5 +58,28 @@ public class DocumentStore {
 			}
 		}
 		return doc;
+	}
+
+	public InputStream getInputStream(URI uri) throws ClientProtocolException,
+			IOException {
+		InputStream is;
+		String result = httpCaller.doGet(uri.toString());
+		is = new ByteArrayInputStream(result.getBytes());
+		return is;
+	}
+	
+	public StringBuilder getData(String uri) {
+		StringBuilder builder = new StringBuilder();
+		try {
+			InputStream in = getInputStream(new URI(uri));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				builder.append(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return builder;
 	}
 }

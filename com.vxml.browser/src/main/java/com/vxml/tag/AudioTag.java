@@ -2,8 +2,6 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
-import com.vxml.tts.NativeCommand;
-
 public class AudioTag extends AbstractTag {
 
 	public AudioTag(Node node) {
@@ -19,8 +17,8 @@ public class AudioTag extends AbstractTag {
 		try {
 		    //Not running as a thread
 		    System.out.println("Audio Tag...." + converted);
-		    
-		    new NativeCommand().play(converted);
+		    System.out.println(getNode().getTextContent());
+//		    new NativeCommand().play(converted);
 //		    new AePlayWave(converted).run();
 		}
 		catch (Exception e) {

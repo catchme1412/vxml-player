@@ -8,6 +8,7 @@ public class NativeCommand {
 
     public void speak(String text) throws IOException, InterruptedException {
         StringBuffer output = new StringBuffer();
+        System.out.println("SPEAK:" + text);
         String[] cmd = { "/bin/sh", "-c", "echo '" + text + "' | festival --tts" };
 
         execute(output, cmd);

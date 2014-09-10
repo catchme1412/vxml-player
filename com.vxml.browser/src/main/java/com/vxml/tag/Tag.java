@@ -7,4 +7,5 @@ public interface Tag {
 	public Node getNode();
 	public void execute();
     public void executeChildNodes();
+    public void executeChildTree(Node startingNode);
 }

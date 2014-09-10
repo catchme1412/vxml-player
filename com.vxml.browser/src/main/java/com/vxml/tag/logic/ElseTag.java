@@ -12,7 +12,10 @@ public class ElseTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-	    System.out.println(nodeToString(getNode()));
-		executeChildNodes();
+		if(isCorrespondingIfConditionIsTrue()) {
+			isSkipTag = true;
+		} else {
+			isSkipTag = false;
+		}
 	}
 }

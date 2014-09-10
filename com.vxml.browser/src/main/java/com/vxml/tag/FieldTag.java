@@ -12,7 +12,6 @@ public class FieldTag extends AbstractTag {
 	public void execute() {
 		String name = getAttribute("name");
 		executeScript("var " + name +";");
-		System.out.println(name);
 	}
 
 }

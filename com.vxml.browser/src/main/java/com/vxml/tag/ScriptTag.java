@@ -16,7 +16,7 @@ public class ScriptTag extends AbstractTag {
 	    String src = getAttribute("src");
 	    if (src != null) {
 	        src = VxmlPlayer.context.getDocBase() + src;
-	        StringBuilder script = new UrlFetchService().fetch(src);
+	        StringBuilder script = new DocumentStore().getData(src);
 	        executeScript(script.toString());
 //	        System.out.println("MMMMMMMMMMMMMM"+ executeScript("history_stack;"));
 	    } else {

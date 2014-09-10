@@ -12,12 +12,18 @@ public class ElseIfTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-		String cond = getAttribute("cond");
-		Boolean isTrue = (Boolean)executeScript(cond + ";");
-		if (isTrue) {
-            executeChildNodes();
-        }
+		if(isCorrespondingIfConditionIsTrue()) {
+			isSkipTag = true;
+		} else {
+			String cond = getAttribute("cond");
+			Boolean isTrue = (Boolean)executeScript(cond + ";");
+			executeScript("var IF_CONDITION_LEVEL_" + ifTagLevel + "=" + isTrue + ";");
+			if (isTrue) {
+				isSkipTag = false;
+			} else {
+				isSkipTag = true;
+			}
+		}
 	}
-
 
 }

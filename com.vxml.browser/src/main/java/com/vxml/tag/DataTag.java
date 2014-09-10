@@ -28,7 +28,7 @@ public class DataTag extends AbstractTag {
 		    queryParams.append(executeScript(nameListArray[i] + ";"));
 		    queryParams.append("&");
 		}
-		StringBuilder result = new UrlFetchService().fetch(queryParams.toString());
+		StringBuilder result =new DocumentStore().getData(queryParams.toString());
 		
 		String name = getAttribute("name");
 		executeScript("var "+ name + "='" + result.toString() + "';");
