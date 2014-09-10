@@ -12,10 +12,7 @@ public class ElseTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-		String cond = getAttribute("cond");
-		Boolean isTrue = (Boolean)executeScript(cond + ";");
-		if (isTrue) {
-            executeChildNodes();
-        }
+	    System.out.println(nodeToString(getNode()));
+		executeChildNodes();
 	}
 }

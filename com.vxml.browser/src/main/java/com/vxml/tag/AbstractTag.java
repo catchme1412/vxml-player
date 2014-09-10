@@ -46,7 +46,7 @@ public abstract class AbstractTag implements Tag {
 		}
 		// if not inside an if tag, then execute. Items inside if tags are
 		// executed in IfTag.java
-		if (ifTagCount == 0 && forEachTagCount == 0) {
+		if ((ifTagCount == 0 && forEachTagCount == 0) || "elseif".equals(node.getNodeName())) {
 			execute();
 		}
 	}
@@ -83,6 +83,7 @@ public abstract class AbstractTag implements Tag {
 
 	public void executeChildNodes() {
 		NodeList list = node.getChildNodes();
+		System.out.println(nodeToString(getNode()));
 		for (int i = 0; i < list.getLength(); i++) {
 			Node n = list.item(i);
 			Tag tag = TagHandlerFactory.getTag(n);

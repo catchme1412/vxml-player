@@ -9,56 +9,79 @@ import com.vxml.tag.TagHandlerFactory;
 
 public class IfTag extends AbstractTag {
 
-	public IfTag(Node node) {
-		super(node);
-	}
+    public IfTag(Node node) {
+        super(node);
+    }
 
-	@Override
-	public void execute() {
-		ifTagCount++;
-		String cond = getAttribute("cond");
-		Boolean isIfConditionTrue = (Boolean) executeScript(cond + ";");
-		NodeList children = getNode().getChildNodes();
-		int index = 0;
-		while (index < children.getLength()) {
-			Node n;
-			n = children.item(index++);
-			if (isIfConditionTrue) {
-				do {
-					Tag tag = TagHandlerFactory.getTag(n);
-					((AbstractTag)tag).performTag();
-				} while (isBlockIndicator(n));
-				return;
-			} else {
-				while(!isBlockIndicator(n)) {
-					n = children.item(index++);
-				}
-				Tag tag = TagHandlerFactory.getTag(n);
-				((AbstractTag)tag).performTag();
-			}
-		}
-		for (int i = 0; i < children.getLength(); i++) {
-			// check the looping is over
-			// looping is over when if block is executed
-			// if one of the else block was executed
-			// or if reached end of the nodes.
-			if (isIfConditionTrue) {
-				// execute the if block
-			} else {
-				// keep skipping the else until you get a true condition
-			}
-		}
-		if (!isIfConditionTrue) {
-			isSkip = true;
-		}
-	}
+    @Override
+    public void execute() {
+        ifTagCount++;
+        String cond = getAttribute("cond");
+        Boolean isIfConditionTrue = (Boolean) executeScript(cond + ";");
+        NodeList children = getNode().getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            Node node = children.item(i);
+            if (isIfConditionTrue) {
+//                if (!isBlockIndicator(node)) {
+//                    Tag tag = TagHandlerFactory.getTag(node);
+//                    ((AbstractTag) tag).performTag();
+//                }
+                return;
+            } else if (isBlockIndicator(node)) {
+                Tag tag = TagHandlerFactory.getTag(node);
+                if (tag instanceof ElseTag) {
+                    if (!isIfConditionTrue) {
+                        ((AbstractTag) tag).performTag();
+                    }
+                } else {
+                    ((AbstractTag) tag).performTag();
+                }
+                
+            }
+        }
+        // NodeIterator ni = ((DocumentTraversal)
+        // getNode()).createNodeIterator(getNode(), NodeFilter.SHOW_ALL,
+        // new EmptyTextNodeFilter(), true);
+        // Node node;
+        // while ((node = ni.nextNode()) != null) {
+        // if (isIfConditionTrue) {
+        // if (!isBlockIndicator(node)) {
+        // Tag tag = TagHandlerFactory.getTag(node);
+        // ((AbstractTag)tag).performTag();
+        // }
+        // } else if (isBlockIndicator(node)) {
+        // Tag tag = TagHandlerFactory.getTag(node);
+        // ((AbstractTag)tag).executeChildNodes();
+        // }
+        // }
+        // if (isIfConditionTrue) {
+        // NodeIterator ni = ((DocumentTraversal)
+        // getNode()).createNodeIterator(getNode(), NodeFilter.SHOW_ALL,
+        // new EmptyTextNodeFilter(), true);
+        // Node node;
+        // while ((node = ni.nextNode()) != null) {
+        // if (!isBlockIndicator(node)) {
+        // Tag tag = TagHandlerFactory.getTag(node);
+        // ((AbstractTag)tag).performTag();
+        // }
+        // }
+        // // for (int i = 0; i < children.getLength(); i++) {
+        // // Node n = children.item(i);
+        // // if (!isBlockIndicator(n)) {
+        // // Tag tag = TagHandlerFactory.getTag(n);
+        // // tag.execute();
+        // // }
+        // // }
+        // } else {
+        //
+        // }
+    }
 
-	private boolean isBlockIndicator(Node n) {
-		if (n != null && "else".equals(n.getNodeName())
-				|| "elseif".equals(n.getNodeName())) {
-			return true;
-		}
-		return false;
-	}
+    private boolean isBlockIndicator(Node n) {
+        if (n != null && "else".equals(n.getNodeName()) || "elseif".equals(n.getNodeName())) {
+            return true;
+        }
+        return false;
+    }
 
 }

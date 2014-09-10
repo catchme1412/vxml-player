@@ -43,7 +43,7 @@ public class VxmlDoc {
 
 	public void play() {
 		NodeIterator ni = ((DocumentTraversal) doc).createNodeIterator(
-				doc.getDocumentElement(), NodeFilter.SHOW_ALL, null, true);
+				doc.getDocumentElement(), NodeFilter.SHOW_ALL, new EmptyTextNodeFilter(), true);
 		Node node;
 		while ((node = ni.nextNode()) != null) {
 			Tag tag = TagHandlerFactory.getTag(node);

@@ -10,11 +10,13 @@ public class GotoTag extends AbstractTag {
 
     @Override
     public void execute() {
-        if (!(getNode().getParentNode().getNodeName().equals("nomatch")
-                || getNode().getParentNode().getNodeName().equals("noinput") || getNode().getParentNode()
-                .getNodeName().equals("catch"))) {
-            String src = getAttribute("src");
-            String next = getAttribute("next");
+        String parentNodeName = getNode().getParentNode().getNodeName();
+        String src = getAttribute("src");
+        String next = getAttribute("next");
+        if (next.contains("greeting_orbitz.vxml")) {
+            System.out.println("HOOOOOOOOOOOO");
+        }
+        if (!(parentNodeName.equals("nomatch") || parentNodeName.equals("noinput") || parentNodeName.equals("catch"))) {
             String target = src != null ? src : next;
             if (target.startsWith("#")) {
                 Tag form = retrieveTag(target.substring(1));

@@ -10,7 +10,7 @@ public class TagHandlerFactory {
 
 	public static Tag getTag(Node node) {
 //		System.out.println(node.getNodeName() + AbstractTag.nodeToString(node));
-	    System.out.println(node.getNodeName());
+//	    System.out.println(node.getNodeName());
 		
 		if (node.getNodeType() == Node.TEXT_NODE) {
 			return new TextTag(node);

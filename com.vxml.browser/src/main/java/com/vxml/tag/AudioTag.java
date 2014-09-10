@@ -20,7 +20,7 @@ public class AudioTag extends AbstractTag {
 		    //Not running as a thread
 		    System.out.println("Audio Tag...." + converted);
 		    
-//		    new NativeCommand().play(converted);
+		    new NativeCommand().play(converted);
 //		    new AePlayWave(converted).run();
 		}
 		catch (Exception e) {
