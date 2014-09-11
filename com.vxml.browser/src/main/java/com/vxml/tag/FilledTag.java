@@ -11,7 +11,7 @@ public class FilledTag extends AbstractTag {
 	@Override
 	public void execute() {
 		try {
-			String value = new DtmfInput().read();
+			String value = new DtmfInput().readWithTimeOut();
 			String fieldName = getFieldName();
 			executeScript("var " + fieldName + "=" + value + ";");
 		} catch (Exception e) {

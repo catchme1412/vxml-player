@@ -36,7 +36,7 @@ public abstract class AbstractTag implements Tag {
 	}
 
 	public void performTag() {
-
+	    System.out.println(nodeToString(node));
 		Node previousTag = node.getPreviousSibling();
 		if (previousTag != null && "if".equals(previousTag.getNodeName())) {
 			System.out.println(">>>>>>>>>>>>EXITING IF");
@@ -45,13 +45,6 @@ public abstract class AbstractTag implements Tag {
 				isSkipTag = false;
 			}
 		}
-		// if (previousTag != null &&
-		// "foreach".equals(previousTag.getNodeName())) {
-		// System.out.println(">>>>>>>>>>>>EXITING ForEach");
-		// forEachTagCount--;
-		// }
-		// if not inside an if tag, then execute. Items inside if tags are
-		// executed in IfTag.java
 		if (!isSkipTag || isLogicalTag()) {
 			execute();
 		}

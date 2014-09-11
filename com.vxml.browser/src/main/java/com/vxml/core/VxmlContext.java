@@ -1,8 +1,9 @@
 package com.vxml.core;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -12,7 +13,9 @@ public class VxmlContext {
 
 	private ScriptEngineManager manager;
 	private ScriptEngine engine;
-	private String docBase = "http://localhost:8080/javascript/";
+	private String docBase = "http://localhost:8585";
+	
+	private Map inputMapping = new HashMap<String, String>(); 
 	
 	
 	public VxmlContext() {
@@ -47,6 +50,13 @@ public class VxmlContext {
     }
     public void setDocBase(String docBase) {
         this.docBase = docBase;
+    }
+    public Map getInputMapping() {
+        return inputMapping;
+    }
+    
+    public void addInputMapping(String input, String replacement) {
+        this.inputMapping.put(input, replacement);
     }
 	
 }
