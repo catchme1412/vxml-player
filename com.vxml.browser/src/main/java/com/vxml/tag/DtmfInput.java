@@ -13,6 +13,7 @@ public class DtmfInput {
         System.out.print("Input>");
         Scanner in = new Scanner(System.in);
         String value = in.next();
+        in.close();
         return value;
     }
 
@@ -34,7 +35,6 @@ public class DtmfInput {
         @Override
         public void run() {
             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-            String msg;
 
             while (!isInterrupted()) {
                 try {

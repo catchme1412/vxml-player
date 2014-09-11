@@ -3,7 +3,6 @@ package com.vxml.tag;
 import java.util.List;
 
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 //<foreach item="flavor" array="arrayFlavors">
 // <prompt>
@@ -22,23 +21,18 @@ public class ForEachTag extends AbstractTag {
 		forEachTagCount++;
 		String arrayVar = getAttribute("array");
 		String item = getAttribute("item");
-		executeScript("var " + item +";");
-		Object array = executeScript(arrayVar +";");
+		executeScript("var " + item);
+		Object array = executeScript(arrayVar);
 		if (array instanceof List) {
 			for (Object o : (List)array) {
-				executeScript(item + "='" + o + "';");
-				System.out.println(o);
-
-				NodeList list = getNode().getChildNodes();
-				for (int i = 0; i < list.getLength(); i++) {
-					Node n = list.item(i);
-					Tag tag = TagHandlerFactory.getTag(n);
-					 System.out.println(nodeToString(tag.getNode()));
-					 System.out.println(getNode().getTextContent().trim());
-					((AbstractTag) tag).execute();
+				if (o instanceof String) {
+					executeScript(item + "='" + o + "'");
+				} else {
+					executeScript(item + "=" + o);
 				}
-			
+				executeChildTree(getNode());
 			}
+			isSkipTag = true;
 		}
 	}
 

@@ -17,11 +17,8 @@ public class AudioTag extends AbstractTag {
 	    String converted = src != null ? src : (String)executeScript(expr +";");
 	    
 		try {
-		    //Not running as a thread
-		    System.out.println("Audio Tag...." + converted);
-		    System.out.println(getNode().getTextContent());
+		    System.out.println("Audio:" + converted);
 		    new NativeCommand().play(converted);
-//		    new AePlayWave(converted).run();
 		}
 		catch (Exception e) {
 		    e.printStackTrace();

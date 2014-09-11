@@ -36,6 +36,15 @@ public class DocumentStore {
 		throw new RuntimeException("Failed to get " + uri);
 		
 	}
+	
+	public Document getDoc(String uri) {
+		try {
+			return getDoc(uri);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public Document getDoc(URI uri) {
 //		System.out.println("Fetch:" + uri);

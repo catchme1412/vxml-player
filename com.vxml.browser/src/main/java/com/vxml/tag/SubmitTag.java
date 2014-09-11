@@ -1,5 +1,9 @@
 package com.vxml.tag;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import com.vxml.core.VxmlPlayer;
@@ -34,10 +38,14 @@ public class SubmitTag extends AbstractTag {
                 queryParams.append(executeScript(nameListArray[i] + ";"));
                 queryParams.append("&");
             }
-            System.out.println(queryParams.toString());
-            System.out.println(nodeToString(getNode()));
-            StringBuilder result =new DocumentStore().getData(queryParams.toString());
-            System.out.println(result);
+            Document result;
+			try {
+				//TODO enable POST method
+				result = new DocumentStore().getDoc(new URI(queryParams.toString()));
+				new VxmlDoc(result).play();
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
         }
         
     }
