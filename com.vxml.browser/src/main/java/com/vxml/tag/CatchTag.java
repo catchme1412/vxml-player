@@ -10,7 +10,7 @@ public class CatchTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-		
+		isSkipTag = true;
 	}
 
 

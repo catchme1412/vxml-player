@@ -61,7 +61,9 @@ public class DocumentStore {
 			System.err.println("FAILED TO FETCH:" + uri);
 		} finally {
 			try {
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

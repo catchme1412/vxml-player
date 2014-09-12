@@ -14,10 +14,10 @@ public class GotoTag extends AbstractTag {
         String src = getAttribute("src");
         String next = getAttribute("next");
         String expr = getAttribute("expr");
-        
-        if (!(parentNodeName.equals("nomatch") || parentNodeName.equals("noinput") || parentNodeName.equals("catch"))) {
+        //parentNodeName.equals("nomatch") || parentNodeName.equals("noinput") || parentNodeName.equals("catch")
+        if (!(isSkipTag)) {
             String target = src != null ? src : next;
-            target = target != null ? target : expr;
+            target = (String) (target != null ? target : executeScript(expr));
             if (target.startsWith("#")) {
                 Tag form = retrieveTag(target.substring(1));
                 executeChildTree(form.getNode());
@@ -25,6 +25,7 @@ public class GotoTag extends AbstractTag {
                 new VxmlDoc(target).play();
             }
         }
+        isSkipTag = false;
     }
 
 }

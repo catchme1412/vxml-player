@@ -16,7 +16,8 @@ public class SubmitTag extends AbstractTag {
 
     @Override
     public void execute() {
-        if(!getNode().getNodeName().equals("catch")) {
+        
+        if(!getNode().getParentNode().getNodeName().equals("catch")) {
             String exprValue = getAttribute("expr");
             String expr = null;
             if (exprValue != null) {

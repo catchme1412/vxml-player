@@ -19,7 +19,7 @@ public class ValueTag extends AbstractTag {
 	        Object value = executeScript(expr);
 	        try {
 				new NativeCommand().speak((String) value);
-			} catch (IOException | InterruptedException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

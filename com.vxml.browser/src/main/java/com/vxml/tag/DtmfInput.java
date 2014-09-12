@@ -10,10 +10,16 @@ public class DtmfInput {
     private String input;
 
     public String read() {
+        String value = null;
         System.out.print("Input>");
-        Scanner in = new Scanner(System.in);
-        String value = in.next();
-        in.close();
+        try {
+            
+            Scanner in = new Scanner(System.in);
+            value = in.next();
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return value;
     }
 
@@ -48,6 +54,7 @@ public class DtmfInput {
 
                 }
             }
+            VxmlPlayer.context.registerEvent(new NoInputEvent());
             System.out.println("Aborted.");
         }
     }

@@ -1,12 +1,12 @@
 package com.vxml.tag;
 
-import org.w3c.dom.Node;
+import java.util.logging.Logger;
 
-import com.sun.istack.internal.logging.Logger;
+import org.w3c.dom.Node;
 
 public class LogTag extends AbstractTag {
 
-	private static final Logger log = Logger.getLogger(LogTag.class);
+	private static final Logger log = Logger.getAnonymousLogger();
 
 	public LogTag(Node node) {
 		super(node);
@@ -14,6 +14,7 @@ public class LogTag extends AbstractTag {
 
 	@Override
 	public void execute() {
+	    
 		String message = getNode().getTextContent();
 		log.info(message);
 	}

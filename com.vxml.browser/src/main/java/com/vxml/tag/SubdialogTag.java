@@ -14,6 +14,7 @@ public class SubdialogTag extends AbstractTag {
 	public void execute() {
 		String srcexpr = getAttribute("srcexpr");
 		String src = getAttribute("src");
+		String target = getAttribute("name");
 		src = src != null ? src : (String)executeScript(srcexpr);
 		
 		StringBuilder url = new StringBuilder();
@@ -33,7 +34,9 @@ public class SubdialogTag extends AbstractTag {
 			}
 		}
 		
-		Document r = new DocumentStore().getDoc(url.toString());
+		StringBuilder r = new DocumentStore().getData(url.toString());
+		executeScript("var " + target +"=" + r.toString());
+		
 		
 	}
 
