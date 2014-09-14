@@ -102,10 +102,12 @@ public abstract class AbstractTag implements Tag {
 		return isSkipExecute;
 	}
 
-	public static void setSkipExecute(boolean isSkipExecute) {
+	public static void setSkipExecute(boolean isSkip) {
 		if (isSkipExecute) {
 			System.out.println(">>>>>>>>>>>>>>>>>");
+		} else {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<");
 		}
-		AbstractTag.isSkipExecute = isSkipExecute;
+		AbstractTag.isSkipExecute = isSkip;
 	}
 }

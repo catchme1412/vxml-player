@@ -10,9 +10,17 @@ public class CommentTag extends AbstractTag {
 	}
 
 	@Override
+	public void startTag() {
+		setSkipExecute(true);
+	}
+
+	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		
+	}
+
+	@Override
+	public void endTag() {
+		setSkipExecute(false);
 	}
 	
 }

@@ -9,9 +9,17 @@ public class LinkTag extends AbstractTag {
 	}
 
 	@Override
-	public void execute() {
+	public void startTag() {
 		setSkipExecute(true);
 	}
 
+	@Override
+	public void execute() {
+	}
+
+	@Override
+	public void endTag() {
+		setSkipExecute(false);
+	}
 
 }

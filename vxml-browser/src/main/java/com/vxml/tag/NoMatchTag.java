@@ -9,11 +9,17 @@ public class NoMatchTag extends AbstractTag {
 	}
 
 	@Override
-	public void execute() {
-		// if (VxmlPlayer.context.peekEvent() == null) {
-		// isSkipTag = true;
-		// }
+	public void startTag() {
+		setSkipExecute(true);
+	}
 
+	@Override
+	public void execute() {
+	}
+
+	@Override
+	public void endTag() {
+		setSkipExecute(false);
 	}
 
 }
