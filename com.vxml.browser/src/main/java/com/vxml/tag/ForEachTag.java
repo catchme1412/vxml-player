@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.w3c.dom.Node;
 
+import com.vxml.core.browser.VxmlBrowser;
+
 //<foreach item="flavor" array="arrayFlavors">
 // <prompt>
 //  <value expr="flavor" />
@@ -18,21 +20,20 @@ public class ForEachTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-		forEachTagCount++;
+//		forEachTagCount++;
 		String arrayVar = getAttribute("array");
 		String item = getAttribute("item");
-		executeScript("var " + item);
-		Object array = executeScript(arrayVar);
+		VxmlBrowser.getContext().executeScript("var " + item);
+		Object array = VxmlBrowser.getContext().executeScript(arrayVar);
 		if (array instanceof List) {
 			for (Object o : (List)array) {
 				if (o instanceof String) {
-					executeScript(item + "='" + o + "'");
+					VxmlBrowser.getContext().executeScript(item + "='" + o + "'");
 				} else {
-					executeScript(item + "=" + o);
+					VxmlBrowser.getContext().executeScript(item + "=" + o);
 				}
 				executeChildTree(getNode());
 			}
-			isSkipTag = true;
 		}
 	}
 

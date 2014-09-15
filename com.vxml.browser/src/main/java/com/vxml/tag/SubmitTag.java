@@ -6,7 +6,9 @@ import java.net.URISyntaxException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import com.vxml.core.VxmlPlayer;
+import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.parser.VxmlDoc;
+import com.vxml.store.DocumentStore;
 
 public class SubmitTag extends AbstractTag {
 
@@ -21,13 +23,13 @@ public class SubmitTag extends AbstractTag {
             String exprValue = getAttribute("expr");
             String expr = null;
             if (exprValue != null) {
-                expr = (String) executeScript(exprValue);
+                expr = (String) VxmlBrowser.getContext().executeScript(exprValue);
             }
             String next = getAttribute("next");
             String src = expr != null ? expr : next;
             
             StringBuilder queryParams = new StringBuilder();
-            src= VxmlPlayer.context.getDocBase() + src;
+            src= VxmlBrowser.getContext().getDocBaseUrl() + src;
             
             queryParams.append(src);
             queryParams.append("?");
@@ -36,7 +38,7 @@ public class SubmitTag extends AbstractTag {
             for (int i = 0; i < nameListArray.length; i++) {
                 queryParams.append(nameListArray[i]);
                 queryParams.append("=");
-                queryParams.append(executeScript(nameListArray[i] + ";"));
+                queryParams.append(VxmlBrowser.getContext().executeScript(nameListArray[i] + ";"));
                 queryParams.append("&");
             }
             Document result;

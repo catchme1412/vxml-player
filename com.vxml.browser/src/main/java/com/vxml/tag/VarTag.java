@@ -2,6 +2,8 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
+import com.vxml.core.browser.VxmlBrowser;
+
 public class VarTag extends AbstractTag {
 
     public VarTag(Node node) {
@@ -12,10 +14,10 @@ public class VarTag extends AbstractTag {
 	public void execute() {
 //		System.out.println(getAttribute("name"));
 		String name = getAttribute("name");
-        executeScript("var " + name + ";");
+        VxmlBrowser.getContext().executeScript("var " + name + ";");
 		String value = getAttribute("expr");
 		if (value != null) {
-		    executeScript(name+"=" +value+";");
+		    VxmlBrowser.getContext().executeScript(name+"=" +value+";");
 		}
 	}
 }

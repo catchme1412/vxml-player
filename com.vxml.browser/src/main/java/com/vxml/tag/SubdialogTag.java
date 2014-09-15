@@ -1,8 +1,14 @@
 package com.vxml.tag;
 
-import org.w3c.dom.Document;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.core.browser.VxmlExecutionContext;
+import com.vxml.store.DocumentStore;
 
 public class SubdialogTag extends AbstractTag {
 
@@ -15,10 +21,10 @@ public class SubdialogTag extends AbstractTag {
 		String srcexpr = getAttribute("srcexpr");
 		String src = getAttribute("src");
 		String target = getAttribute("name");
-		src = src != null ? src : (String)executeScript(srcexpr);
+		src = src != null ? src : (String)VxmlBrowser.getContext().executeScript(srcexpr);
 		
 		StringBuilder url = new StringBuilder();
-		url.append(VxmlPlayer.context.getDocBase());
+        url.append(VxmlExecutionContext.getDocBaseUrl());
 		url.append(src);
 		url.append("?");
 		NodeList paramList = getNode().getChildNodes();
@@ -29,13 +35,19 @@ public class SubdialogTag extends AbstractTag {
 				String expr = node.getAttributes().getNamedItem("expr").getNodeValue();
 				url.append(name);
 				url.append("=");
-				url.append(executeScript(expr));
+				url.append(VxmlBrowser.getContext().executeScript(expr));
 				url.append("&");
 			}
 		}
 		
-		StringBuilder r = new DocumentStore().getData(url.toString());
-		executeScript("var " + target +"=" + r.toString());
+		StringBuilder r = null;
+        try {
+            r = new DocumentStore().getData(new URI(url.toString()));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        System.out.println("FFf"+ r);
+		VxmlBrowser.getContext().executeScript("var " + target +"=<![CDATA[" + r +"]]>");
 		
 		
 	}

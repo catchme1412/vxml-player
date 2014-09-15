@@ -1,9 +1,6 @@
 package com.vxml.tag;
 
-import java.io.File;
 import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -15,107 +12,33 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.vxml.core.VxmlPlayer;
-
 public abstract class AbstractTag implements Tag {
 
-	private static Map<String, String> propertyMap = new HashMap<String, String>();
-
-	protected static boolean isSkipTag;
-
-	protected static int ifTagLevel;
-	protected static int forEachTagCount;
-
-	private static Map<String, Tag> tagRef = new HashMap<String, Tag>();
-
 	private Node node;
+	
+	private static boolean isSkipExecute;
 
 	public AbstractTag(Node node) {
-		this.setNode(node);
+		this.node = node;
 	}
 
-	public void performTag() {
-	    System.out.println(nodeToString(getNode()));
-		Node previousTag = getNode().getPreviousSibling();
-		if (previousTag != null && "if".equals(previousTag.getNodeName())) {
-			ifTagLevel--;
-			if (ifTagLevel == 0) {
-				isSkipTag = false;
-			}
-		}
-		if (previousTag != null && "foreach".equals(previousTag.getNodeName())) {
-			forEachTagCount--;
-			if (forEachTagCount == 0) {
-				isSkipTag = false;
-			}
-		}
-		if (!isSkipTag || isLogicalTag()) {
-			execute();
-		}
+	public void startTag() {
+
 	}
 
-	private boolean isLogicalTag() {
-		return "elseif".equals(getNode().getNodeName()) || "else".equals(getNode().getNodeName());
+	public void endTag() {
 	}
 
-	public boolean isCorrespondingIfConditionIsTrue() {
-		Boolean isIfConditionTrue = false;
-
-		try {
-			isIfConditionTrue = (Boolean) executeScript("IF_CONDITION_LEVEL_" + ifTagLevel + ";");
-			if (isIfConditionTrue) {
-				return true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public Object executeScript(String script) {
-		if (!script.endsWith(";")) {
-			script = script + ";";
-		}
-		return VxmlPlayer.context.executeScript(script);
-	}
-
-	public Object executeScript(File file) {
-		return VxmlPlayer.context.executeScript(file);
-	}
-
-	@Override
 	public Node getNode() {
 		return node;
-	}
-
-	public void setProperty(String property, String value) {
-		propertyMap.put(property, value);
 	}
 
 	public String getAttribute(String key) {
 		Node namedItem = getNode().getAttributes().getNamedItem(key);
 		return namedItem != null ? namedItem.getNodeValue() : null;
 	}
-
-	public void storeTag(String id, Tag tag) {
-		tagRef.put(id, tag);
-	}
-
-	public Tag retrieveTag(String id) {
-		return tagRef.get(id);
-	}
-
-	public void executeChildNodes() {
-		NodeList list = getNode().getChildNodes();
-		for (int i = 0; i < list.getLength(); i++) {
-			Node n = list.item(i);
-			Tag tag = TagHandlerFactory.getTag(n);
-			// System.out.println(nodeToString(tag.getNode()));
-			((AbstractTag) tag).performTag();
-		}
-	}
-
-	@Override
+	
+	
 	public void executeChildTree(Node startNode) {
 		if (startNode == null) {
 			System.out.println("Nothing to print!!");
@@ -129,8 +52,8 @@ public abstract class AbstractTag implements Tag {
 			if (nl != null) {
 				for (int i = 0; i < nl.getLength(); i++) {
 					Node node = nl.item(i);
-					Tag tag = TagHandlerFactory.getTag(node);
-					((AbstractTag) tag).performTag();
+					Tag tag = TagFactory.get(node);
+					((AbstractTag) tag).tryExecute();
 					executeChildTree(node);
 				}
 			}
@@ -139,25 +62,47 @@ public abstract class AbstractTag implements Tag {
 		}
 	}
 	
-	public String toString() {
-		return nodeToString(getNode());
-	}
 
-	public static String nodeToString(Node node) {
+	public String nodeToString() {
 		StringWriter sw = new StringWriter();
 		try {
 			Transformer t = TransformerFactory.newInstance().newTransformer();
 			t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			t.setOutputProperty(OutputKeys.INDENT, "no");
-			t.transform(new DOMSource(node), new StreamResult(sw));
+			t.setOutputProperty(OutputKeys.INDENT, "yes");
+			t.transform(new DOMSource(getNode()), new StreamResult(sw));
 		} catch (TransformerException te) {
 			System.err.println("nodeToString Transformer Exception");
 		}
 		return sw.toString();
 	}
 
+	@Override
+	public String toString() {
+		String xml = nodeToString();
+		String tag = xml.substring(0, xml.indexOf(">") + 1);
+		if (tag.isEmpty()) {
+			return "\t#text:" + getNode().getTextContent().trim();
+		}
+		return tag;
+	}
+
 	public void setNode(Node node) {
 		this.node = node;
 	}
 
+	public void tryExecute() {
+		if (isSkipExecute()) {
+			System.out.println("SKIPPING:" + this);
+		} else {
+			execute();
+		}
+	}
+
+	public static boolean isSkipExecute() {
+		return isSkipExecute;
+	}
+
+	public static  void setSkipExecute(boolean isSkip) {
+		AbstractTag.isSkipExecute = isSkip;
+	}
 }

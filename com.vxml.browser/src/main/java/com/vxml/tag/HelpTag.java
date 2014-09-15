@@ -2,9 +2,9 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
-public class CatchTag extends AbstractTag {
+public class HelpTag extends AbstractTag {
 
-	public CatchTag(Node node) {
+	public HelpTag(Node node) {
 		super(node);
 	}
 
@@ -15,6 +15,7 @@ public class CatchTag extends AbstractTag {
 
 	@Override
 	public void execute() {
+
 	}
 
 	@Override

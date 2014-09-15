@@ -2,9 +2,9 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
-public class CatchTag extends AbstractTag {
+public class PropertyTag extends AbstractTag {
 
-	public CatchTag(Node node) {
+	public PropertyTag(Node node) {
 		super(node);
 	}
 
