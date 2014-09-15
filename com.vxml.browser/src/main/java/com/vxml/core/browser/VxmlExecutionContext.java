@@ -17,7 +17,7 @@ public class VxmlExecutionContext {
 
     private ScriptExecutionContext scriptExecutionContext;
     private static boolean isSkipTagExecute;
-    private static boolean isTtsAllowed;
+    private static boolean isTtsAllowed = true;
     private static String docBaseUrl = "http://localhost:8080/javscript/";
     private EventHandler eventHandler;
     

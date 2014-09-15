@@ -4,16 +4,10 @@ import java.net.URI;
 import java.util.Stack;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.traversal.DocumentTraversal;
-import org.w3c.dom.traversal.NodeFilter;
-import org.w3c.dom.traversal.NodeIterator;
 
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.store.DocumentStore;
-import com.vxml.tag.AbstractTag;
 import com.vxml.tag.Tag;
-import com.vxml.tag.TagFactory;
 
 public class VxmlDoc {
 

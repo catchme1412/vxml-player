@@ -7,54 +7,53 @@ import java.util.Scanner;
 
 public class DtmfInput {
 
-    private String input;
+	private String input;
 
-    public String read() {
-        String value = null;
-        System.out.print("Input>");
-        try {
-            
-            Scanner in = new Scanner(System.in);
-            value = in.next();
-            in.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return value;
-    }
+	public String read() {
+		String value = null;
+		System.out.print("Input>");
+		try {
+			Scanner in = new Scanner(System.in);
+			value = in.next();
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return value;
+	}
 
-    public String readWithTimeOut() {
-        System.out.print("Input(wait 5 sec)>");
-        MyThread myThread = new MyThread();
-        myThread.start();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            // Do nothing
-        }
+	public String readWithTimeOut() {
+		System.out.print("Input(wait 5 sec)>");
+		ReadThread myThread = new ReadThread();
+		myThread.start();
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// Do nothing
+		}
 
-        myThread.interrupt();
-        return input;
-    }
+		myThread.interrupt();
+		return input;
+	}
 
-    private class MyThread extends Thread {
-        @Override
-        public void run() {
-            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+	private class ReadThread extends Thread {
+		@Override
+		public void run() {
+			BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
-            while (!isInterrupted()) {
-                try {
-                    if (stdin.ready()) {
-                        input = stdin.readLine();
-                        System.out.println("Got: " + input);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
+			while (!isInterrupted()) {
+				try {
+					if (stdin.ready()) {
+						input = stdin.readLine();
+						System.out.println("Got: " + input);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
 
-                }
-            }
-            System.out.println("Aborted.");
-        }
-    }
+				}
+			}
+			System.out.println("Aborted.");
+		}
+	}
 }

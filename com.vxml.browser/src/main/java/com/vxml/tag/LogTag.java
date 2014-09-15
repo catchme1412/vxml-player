@@ -16,7 +16,6 @@ public class LogTag extends AbstractTag {
 
     @Override
     public void startTag() {
-//        setSkipExecute(true);
         VxmlExecutionContext.setTtsAllowed(false);
     }
 
@@ -28,7 +27,6 @@ public class LogTag extends AbstractTag {
 
     @Override
     public void endTag() {
-//        setSkipExecute(false);
         VxmlExecutionContext.setTtsAllowed(true);
     }
 }

@@ -3,7 +3,6 @@ package com.vxml.tag;
 import org.w3c.dom.Node;
 
 import com.vxml.core.browser.VxmlBrowser;
-import com.vxml.tag.AbstractTag;
 
 public class IfTag extends AbstractTag {
 

@@ -21,14 +21,28 @@ public class SubdialogTag extends AbstractTag {
 		String srcexpr = getAttribute("srcexpr");
 		String src = getAttribute("src");
 		String target = getAttribute("name");
-		src = src != null ? src : (String)VxmlBrowser.getContext().executeScript(srcexpr);
-		
+		src = src != null ? src : (String) VxmlBrowser.getContext().executeScript(srcexpr);
+
+		StringBuilder url = getUrl(src);
+
+		StringBuilder r = null;
+		try {
+			r = new DocumentStore().getData(new URI(url.toString()));
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		System.out.println("FFf" + r);
+		VxmlBrowser.getContext().executeScript("var " + target + "=(<![CDATA[" + r + "]]>).toString()");
+
+	}
+
+	private StringBuilder getUrl(String src) {
 		StringBuilder url = new StringBuilder();
-        url.append(VxmlExecutionContext.getDocBaseUrl());
+		url.append(VxmlExecutionContext.getDocBaseUrl());
 		url.append(src);
 		url.append("?");
 		NodeList paramList = getNode().getChildNodes();
-		for (int i= 0; i < paramList.getLength(); i++) {
+		for (int i = 0; i < paramList.getLength(); i++) {
 			Node node = paramList.item(i);
 			if ("param".equals(node.getNodeName())) {
 				String name = node.getAttributes().getNamedItem("name").getNodeValue();
@@ -39,18 +53,7 @@ public class SubdialogTag extends AbstractTag {
 				url.append("&");
 			}
 		}
-		
-		StringBuilder r = null;
-        try {
-            r = new DocumentStore().getData(new URI(url.toString()));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        System.out.println("FFf"+ r);
-		VxmlBrowser.getContext().executeScript("var " + target +"=<![CDATA[" + r +"]]>");
-		
-		
+		return url;
 	}
 
-	
 }

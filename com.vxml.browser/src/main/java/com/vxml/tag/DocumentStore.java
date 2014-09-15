@@ -26,16 +26,7 @@ public class DocumentStore {
 		}
 	}
 	
-	public VxmlDoc get(URI uri) {
-		try {
-			Document doc = getDoc(uri);
-	        return new VxmlDoc(doc);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		throw new RuntimeException("Failed to get " + uri);
-		
-	}
+	
 	
 	public Document getDoc(String uri) {
 		try {

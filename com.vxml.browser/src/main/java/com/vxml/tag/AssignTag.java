@@ -17,7 +17,7 @@ public class AssignTag extends AbstractTag {
 	    if (expr == null) {
 	        VxmlBrowser.getContext().executeScript("var " + name + ";");
 	    } else {
-	        String exprResult = (String) VxmlBrowser.getContext().executeScript(expr);
+	        Object exprResult = VxmlBrowser.getContext().executeScript(expr);
 	        VxmlBrowser.getContext().executeScript(name + "=" + exprResult + ";");
 	    }
 		

@@ -17,7 +17,7 @@ public class ValueTag extends AbstractTag {
 	        String expr = getAttribute("expr");
 	        Object value = VxmlBrowser.getContext().executeScript(expr);
 	        try {
-				new NativeCommand().speak((String) value);
+				new NativeCommand().speak(value.toString());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

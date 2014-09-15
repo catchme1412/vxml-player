@@ -21,7 +21,7 @@ public class AudioTag extends AbstractTag {
 		try {
 		    System.out.println("Audio:" + converted);
 		    try {
-//		        new NativeCommand().play(converted);
+		        new NativeCommand().play(converted);
 		        VxmlExecutionContext.setTtsAllowed(false);
 		    } catch (Exception e) {
 		        e.printStackTrace();

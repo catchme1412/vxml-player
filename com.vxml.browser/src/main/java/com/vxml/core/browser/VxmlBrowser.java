@@ -9,7 +9,6 @@ import org.w3c.dom.Document;
 
 import com.vxml.core.VxmlException;
 import com.vxml.parser.VxmlDoc;
-import com.vxml.parser.VxmlParser;
 import com.vxml.store.DocumentStore;
 
 public class VxmlBrowser {
@@ -45,7 +44,7 @@ public class VxmlBrowser {
 	
 	public static void main(String[] args) throws VxmlException, URISyntaxException {
 		VxmlBrowser vxmlBrowser = new VxmlBrowser();
-		vxmlBrowser.setEntryPointUrl("http://localhost:8585/ivr/testing/sao.vxml");
+		vxmlBrowser.setEntryPointUrl("http://localhost:8080/javascript/index.html");
 		vxmlBrowser.start();
 	}
 

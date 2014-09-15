@@ -2,12 +2,19 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
+import com.vxml.core.browser.VxmlExecutionContext;
+
 public class ItemTag extends AbstractTag {
 
 	public ItemTag(Node node) {
 		super(node);
 	}
 
+	@Override
+	public void startTag() {
+		VxmlExecutionContext.setTtsAllowed(false);
+	}
+	
 	@Override
 	public void execute() {
 		try {
@@ -21,4 +28,8 @@ public class ItemTag extends AbstractTag {
 		}
 	}
 
+	@Override
+	public void endTag() {
+		VxmlExecutionContext.setTtsAllowed(true);
+	}
 }
