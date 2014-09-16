@@ -14,7 +14,9 @@ public class DtmfInput {
 		System.out.print("Input>");
 		try {
 			Scanner in = new Scanner(System.in);
-			value = in.next();
+			if (in.hasNext()) {
+			    value = in.next();
+			}
 			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();

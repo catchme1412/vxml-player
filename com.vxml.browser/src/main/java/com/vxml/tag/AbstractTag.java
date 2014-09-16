@@ -10,6 +10,8 @@ public abstract class AbstractTag implements Tag {
 	private Node node;
 
 	private static boolean isSkipExecute;
+	
+	private String subdialogName;
 
 	public AbstractTag(Node node) {
 		this.node = node;
@@ -30,6 +32,7 @@ public abstract class AbstractTag implements Tag {
 		return XmlUtils.getAttribute(getNode(), key);
 	}
 
+	//similar to walk
 	public void executeChildTree(Node startNode) {
 		if (startNode == null) {
 			System.out.println("Nothing to print!!");
@@ -37,17 +40,19 @@ public abstract class AbstractTag implements Tag {
 		}
 		try {
 			Tag tag = TagFactory.get(startNode);
-			((AbstractTag) tag).execute();
+			((AbstractTag) tag).startTag();
+			((AbstractTag) tag).tryExecute();
 
 			NodeList nl = startNode.getChildNodes();
 			if (nl != null) {
 				for (int i = 0; i < nl.getLength(); i++) {
 					Node node = nl.item(i);
-					tag = TagFactory.get(node);
-					((AbstractTag) tag).tryExecute();
+//					tag = TagFactory.get(node);
+//					((AbstractTag) tag).tryExecute();
 					executeChildTree(node);
 				}
 			}
+			((AbstractTag) tag).endTag();
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -86,4 +91,12 @@ public abstract class AbstractTag implements Tag {
 	public static void setSkipExecute(boolean isSkip) {
 		AbstractTag.isSkipExecute = isSkip;
 	}
+
+    public String getSubdialogName() {
+        return subdialogName;
+    }
+
+    public void setSubdialogName(String subdialogName) {
+        this.subdialogName = subdialogName;
+    }
 }

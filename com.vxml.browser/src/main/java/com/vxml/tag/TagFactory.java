@@ -20,6 +20,9 @@ public class TagFactory {
 
 	private static String getTagName(Node node) {
 		String nodeName = node.getNodeName();
+		if (nodeName.equals("cisco-data")) {
+		    nodeName = "data";
+		}
 		if (nodeName.startsWith("#")) {
 			nodeName = nodeName.substring(1);
 		}

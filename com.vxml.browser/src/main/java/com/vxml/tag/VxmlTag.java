@@ -15,6 +15,7 @@ public class VxmlTag extends AbstractTag {
 		String application = getAttribute("application");
 		if (application != null) {
 			new VxmlDoc(application).play();
+			System.err.println("APPLICATION URI IS DONE");
 		} else {
 		    
 		}

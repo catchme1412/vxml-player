@@ -21,6 +21,7 @@ public class AudioTag extends AbstractTag {
 		try {
 		    System.out.println("Audio:" + converted);
 		    try {
+		        converted = converted.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
 		        new NativeCommand().play(converted);
 		        VxmlExecutionContext.setTtsAllowed(false);
 		    } catch (Exception e) {

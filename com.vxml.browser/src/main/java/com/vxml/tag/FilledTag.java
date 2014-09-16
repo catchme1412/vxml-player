@@ -57,10 +57,10 @@ public class FilledTag extends AbstractTag {
 
 			} else {
 				// no input
+				VxmlBrowser.getContext().getEventHandler().fireEvent("noinput");
 				if (noinputTag != null) {
 					executeChildTree(noinputTag.getNode());
 				}
-//				VxmlBrowser.getContext().getEventHandler().fireEvent("noinput");
 //				AbstractTag.setSkipExecute(true);
 			}
 			// else {

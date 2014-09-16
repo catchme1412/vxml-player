@@ -1,5 +1,6 @@
 package com.vxml.core.browser;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -51,9 +52,25 @@ public class VxmlExecutionContext {
         try {
             return scriptExecutionContext.executeScript(script);
         } catch (ScriptException e) {
+            System.err.println("SCRIPT:" + script);
             e.printStackTrace();
+            System.exit(1);
         }
         return null;
+    }
+    
+    public Object executeScript(InputStream script) {
+        try {
+            return scriptExecutionContext.executeScript(script);
+        } catch (ScriptException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return null;
+    }
+    
+    public void assignScriptVar(String var, Object val) {
+        scriptExecutionContext.put(var, val);
     }
 
     public static String getDocBaseUrl() {

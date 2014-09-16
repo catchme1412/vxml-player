@@ -14,6 +14,9 @@ public class VarTag extends AbstractTag {
 	public void execute() {
 //		System.out.println(getAttribute("name"));
 		String name = getAttribute("name");
+		if (getSubdialogName() != null) {
+		    name = getSubdialogName() + "." + name;
+		}
         VxmlBrowser.getContext().executeScript("var " + name + ";");
 		String value = getAttribute("expr");
 		if (value != null) {

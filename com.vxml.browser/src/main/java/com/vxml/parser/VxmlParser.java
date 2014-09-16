@@ -51,7 +51,7 @@ public class VxmlParser {
             return;
         }
         Tag tag = TagFactory.get(node);
-        System.out.println("START:" + node.getNodeType() + "::" + tag);
+//        System.out.println("START:" + node.getNodeType() + "::" + tag);
         stack.add(tag);
         tag.startTag();
         ((AbstractTag) tag).tryExecute();
@@ -61,7 +61,7 @@ public class VxmlParser {
             walk(child);
         }
 
-        System.out.println("END:" + tag);
+//        System.out.println("END:" + tag);
         tag.endTag();
     }
 
