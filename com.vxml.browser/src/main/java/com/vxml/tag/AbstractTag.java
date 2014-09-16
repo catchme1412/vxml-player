@@ -34,29 +34,24 @@ public abstract class AbstractTag implements Tag {
 
 	//similar to walk
 	public void executeChildTree(Node startNode) {
-		if (startNode == null) {
-			System.out.println("Nothing to print!!");
-			return;
-		}
-		try {
-			Tag tag = TagFactory.get(startNode);
-			((AbstractTag) tag).startTag();
-			((AbstractTag) tag).tryExecute();
+        if (node.getNodeType() == Node.COMMENT_NODE
+                || (node.getNodeType() == Node.TEXT_NODE && node.getTextContent().trim().isEmpty())) {
+            return;
+        }
 
-			NodeList nl = startNode.getChildNodes();
-			if (nl != null) {
-				for (int i = 0; i < nl.getLength(); i++) {
-					Node node = nl.item(i);
-//					tag = TagFactory.get(node);
-//					((AbstractTag) tag).tryExecute();
-					executeChildTree(node);
-				}
-			}
-			((AbstractTag) tag).endTag();
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-	}
+        // recurse
+        for (Node child = startNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+        	Tag tag = TagFactory.get(child);
+//        System.out.println("START:" + node.getNodeType() + "::" + tag);
+//        stack.add(tag);
+        	tag.startTag();
+        	((AbstractTag) tag).tryExecute();
+        	executeChildTree(child);
+			tag.endTag();
+        }
+
+//        System.out.println("END:" + tag);
+    }
 
 	public String nodeToString() {
 		return XmlUtils.nodeToString(getNode());

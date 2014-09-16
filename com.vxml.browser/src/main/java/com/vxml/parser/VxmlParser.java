@@ -52,7 +52,7 @@ public class VxmlParser {
         }
         Tag tag = TagFactory.get(node);
 //        System.out.println("START:" + node.getNodeType() + "::" + tag);
-        stack.add(tag);
+//        stack.add(tag);
         tag.startTag();
         ((AbstractTag) tag).tryExecute();
 

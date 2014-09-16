@@ -14,28 +14,43 @@ import com.vxml.core.browser.VxmlBrowser;
 //</foreach>
 public class ForeachTag extends AbstractTag {
 
+	private boolean isSkipTagBackup;
+
 	public ForeachTag(Node node) {
 		super(node);
 	}
 
 	@Override
+	public void startTag() {
+		isSkipTagBackup = isSkipExecute();
+	}
+
+	@Override
 	public void execute() {
-//		forEachTagCount++;
+
+		setSkipExecute(false);
 		String arrayVar = getAttribute("array");
 		String item = getAttribute("item");
 		VxmlBrowser.getContext().executeScript("var " + item);
 		Object array = VxmlBrowser.getContext().executeScript(arrayVar);
 		if (array instanceof List) {
-			for (Object o : (List)array) {
+			for (Object o : (List) array) {
 				if (o instanceof String) {
 					VxmlBrowser.getContext().executeScript(item + "='" + o + "'");
 				} else {
 					VxmlBrowser.getContext().executeScript(item + "=" + o);
 				}
-				executeChildTree(getNode().getFirstChild());
+				System.out.println("LOOOP:" + o);
+				executeChildTree(getNode());
+				// setSkipExecute(true);
 			}
 		}
+		setSkipExecute(true);
 	}
 
+	@Override
+	public void endTag() {
+		setSkipExecute(isSkipTagBackup);
+	}
 
 }
