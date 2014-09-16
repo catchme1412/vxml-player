@@ -3,6 +3,7 @@ package com.vxml.core.browser;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.vxml.browser.event.Event;
 import com.vxml.tag.Tag;
 
 public class EventHandler {
@@ -13,7 +14,7 @@ public class EventHandler {
 		eventMap.put(eventName, node);
 	}
 
-	public void handleEvent(String eventType) {
+	public void handleEvent(String eventType) throws Event {
 		eventMap.get(eventType).execute();
 	}
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.w3c.dom.Node;
 
+import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
 
 //<foreach item="flavor" array="arrayFlavors">
@@ -26,7 +27,7 @@ public class ForeachTag extends AbstractTag {
 	}
 
 	@Override
-	public void execute() {
+	public void execute() throws Event {
 
 		setSkipExecute(false);
 		String arrayVar = getAttribute("array");

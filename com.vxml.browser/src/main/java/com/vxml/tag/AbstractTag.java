@@ -3,6 +3,7 @@ package com.vxml.tag;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.vxml.browser.event.Event;
 import com.vxml.utils.XmlUtils;
 
 public abstract class AbstractTag implements Tag {
@@ -33,7 +34,7 @@ public abstract class AbstractTag implements Tag {
 	}
 
 	//similar to walk
-	public void executeChildTree(Node startNode) {
+	public void executeChildTree(Node startNode) throws Event {
         if (node.getNodeType() == Node.COMMENT_NODE
                 || (node.getNodeType() == Node.TEXT_NODE && node.getTextContent().trim().isEmpty())) {
             return;
@@ -71,7 +72,7 @@ public abstract class AbstractTag implements Tag {
 		this.node = node;
 	}
 
-	public void tryExecute() {
+	public void tryExecute() throws Event {
 		if (isSkipExecute()) {
 			System.out.println("SKIPPING:" + this);
 		} else {

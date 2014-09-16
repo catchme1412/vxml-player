@@ -5,6 +5,7 @@ import java.util.Stack;
 
 import org.w3c.dom.Document;
 
+import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.store.DocumentStore;
 import com.vxml.tag.Tag;
@@ -60,7 +61,7 @@ public class VxmlDoc {
     //
     // }
 
-    public void play() {
+    public void play() throws Event {
         new VxmlParser().parse(this);
     }
 

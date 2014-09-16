@@ -3,6 +3,7 @@ package com.vxml.tag;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.dtmf.DtmfInput;
 import com.vxml.utils.XmlUtils;
@@ -44,7 +45,7 @@ public class FilledTag extends AbstractTag {
 	}
 	
 	@Override
-	public void execute() {
+	public void execute() throws Event {
 		try {
 			String value = new DtmfInput().readWithTimeOut();
 			if (value != null) {

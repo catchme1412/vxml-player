@@ -1,11 +1,15 @@
 package com.vxml.core;
 
-import java.net.URISyntaxException;
 
 public class VxmlException extends RuntimeException {
 
-	public VxmlException(URISyntaxException e) {
+	public VxmlException(Exception e) {
 		super(e);
+	}
+
+	public VxmlException(String string) {
+		// TODO Auto-generated constructor stub
+		super(string);
 	}
 
 }

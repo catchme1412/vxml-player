@@ -6,6 +6,8 @@ import java.net.URISyntaxException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.vxml.browser.event.Event;
+import com.vxml.browser.event.ReturnFromSubdialogEvent;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.core.browser.VxmlExecutionContext;
 import com.vxml.parser.VxmlDoc;
@@ -32,7 +34,15 @@ public class SubdialogTag extends AbstractTag {
         src = src != null ? src : (String) VxmlBrowser.getContext().executeScript(srcexpr);
 
         StringBuilder url = getUrl(src);
-        new VxmlDoc(url.toString()).play();
+        try {
+			new VxmlDoc(url.toString()).play();
+		} catch (Event e) {
+			if( e instanceof ReturnFromSubdialogEvent) {
+				System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+			}
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //        StringBuilder r = null;
 //        try {
 //            r = new DocumentStore().getData(new URI(url.toString()));

@@ -7,6 +7,7 @@ import javax.script.ScriptException;
 
 import org.w3c.dom.Document;
 
+import com.vxml.browser.event.Event;
 import com.vxml.core.VxmlException;
 import com.vxml.parser.VxmlDoc;
 import com.vxml.store.DocumentStore;
@@ -26,7 +27,7 @@ public class VxmlBrowser {
 		}
 	}
 	
-	public void start() throws VxmlException, URISyntaxException {
+	public void start() throws VxmlException, URISyntaxException, Event {
 	    URI uri = new URI(entryPointUrl);
 	    context.setDocBaseUrl(uri.getScheme() + "://" + uri.getAuthority());
         Document xml = new DocumentStore().getDoc(uri);
@@ -42,7 +43,7 @@ public class VxmlBrowser {
 		this.entryPointUrl = entryPointUrl;
 	}
 	
-	public static void main(String[] args) throws VxmlException, URISyntaxException {
+	public static void main(String[] args) throws VxmlException, URISyntaxException, Event {
 		VxmlBrowser vxmlBrowser = new VxmlBrowser();
 		vxmlBrowser.setEntryPointUrl("http://localhost:8080/javascript/index.html");
 		vxmlBrowser.start();

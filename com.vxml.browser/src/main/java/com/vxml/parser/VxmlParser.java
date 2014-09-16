@@ -2,6 +2,7 @@ package com.vxml.parser;
 
 import java.util.Stack;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -9,6 +10,7 @@ import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
 
+import com.vxml.browser.event.Event;
 import com.vxml.tag.AbstractTag;
 import com.vxml.tag.Tag;
 import com.vxml.tag.TagFactory;
@@ -45,7 +47,7 @@ public class VxmlParser {
         }
     }
 
-    public void walk(Node node) {
+    public void walk(Node node) throws Event {
         if (node.getNodeType() == Node.COMMENT_NODE
                 || (node.getNodeType() == Node.TEXT_NODE && node.getTextContent().trim().isEmpty())) {
             return;
@@ -65,7 +67,7 @@ public class VxmlParser {
         tag.endTag();
     }
 
-    public void parse(VxmlDoc vxmlDoc) {
+    public void parse(VxmlDoc vxmlDoc) throws Event {
         Document doc = vxmlDoc.getXmlDoc();
         NodeIterator ni = ((DocumentTraversal) doc).createNodeIterator(doc.getDocumentElement(), NodeFilter.SHOW_ALL
                 & ~NodeFilter.SHOW_COMMENT, new EmptyTextNodeFilter(), true);

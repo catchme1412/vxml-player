@@ -2,6 +2,7 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
+import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.parser.VxmlDoc;
 
@@ -23,7 +24,7 @@ public class GotoTag extends AbstractTag {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws Event {
         if (target.startsWith("#")) {
             Tag form = VxmlBrowser.getContext().getTag(target.substring(1));
             ((AbstractTag)form).tryExecute();
