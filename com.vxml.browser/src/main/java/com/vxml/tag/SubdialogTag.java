@@ -1,19 +1,18 @@
 package com.vxml.tag;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.vxml.browser.event.Event;
 import com.vxml.browser.event.ReturnFromSubdialogEvent;
+import com.vxml.core.browser.ScriptExecutionContext;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.core.browser.VxmlExecutionContext;
 import com.vxml.parser.VxmlDoc;
-import com.vxml.store.DocumentStore;
 
 public class SubdialogTag extends AbstractTag {
+
+    private String name;
 
     public SubdialogTag(Node node) {
         super(node);
@@ -21,9 +20,11 @@ public class SubdialogTag extends AbstractTag {
 
     @Override
     public void startTag() {
-        String name = getAttribute("name");
+        name = getAttribute("name");
         VxmlBrowser.getContext().executeScript("var " + name + "={}");
-        setSubdialogName(name);
+        VxmlBrowser.getContext().executeScript(
+                ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName='" + name+"'");
+        System.err.println("SUBDIALOG STARTS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + name);
     }
 
     @Override
@@ -35,22 +36,22 @@ public class SubdialogTag extends AbstractTag {
 
         StringBuilder url = getUrl(src);
         try {
-			new VxmlDoc(url.toString()).play();
-		} catch (Event e) {
-			if( e instanceof ReturnFromSubdialogEvent) {
-				System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-			}
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//        StringBuilder r = null;
-//        try {
-//            r = new DocumentStore().getData(new URI(url.toString()));
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("FFf" + r);
-//        VxmlBrowser.getContext().executeScript("var " + target + "='" + r.toString().replaceAll("'", "\\\\'") + "'");
+            new VxmlDoc(url.toString()).play();
+        } catch (Event e) {
+            if (e instanceof ReturnFromSubdialogEvent) {
+                System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+            }
+            // TODO Auto-generated catch block
+        }
+        // StringBuilder r = null;
+        // try {
+        // r = new DocumentStore().getData(new URI(url.toString()));
+        // } catch (URISyntaxException e) {
+        // e.printStackTrace();
+        // }
+        // System.out.println("FFf" + r);
+        // VxmlBrowser.getContext().executeScript("var " + target + "='" +
+        // r.toString().replaceAll("'", "\\\\'") + "'");
 
     }
 
@@ -76,9 +77,7 @@ public class SubdialogTag extends AbstractTag {
 
     @Override
     public void endTag() {
-        // resetting
-        setSubdialogName(null);
-
+        System.err.println("SUBDIALOG ENDS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" + name);
     }
 
     public static void main(String[] args) {

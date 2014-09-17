@@ -15,9 +15,6 @@ public class AssignTag extends AbstractTag {
 	    String name = getAttribute("name");
 	    
 	    //subdialog variables are prefixed with the subdialog name. (Name scope)
-	    if (getSubdialogName() != null) {
-            name = getSubdialogName() + "." + name;
-        }
 	    String expr = getAttribute("expr");
 	    if (expr == null) {
 	        VxmlBrowser.getContext().executeScript("var " + name + ";");

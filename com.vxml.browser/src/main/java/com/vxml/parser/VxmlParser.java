@@ -2,7 +2,6 @@ package com.vxml.parser;
 
 import java.util.Stack;
 
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

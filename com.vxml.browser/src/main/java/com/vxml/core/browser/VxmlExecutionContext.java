@@ -9,13 +9,14 @@ import java.util.Stack;
 
 import javax.script.ScriptException;
 
+import com.sun.istack.internal.logging.Logger;
 import com.vxml.core.VxmlException;
 import com.vxml.tag.Tag;
 
 public class VxmlExecutionContext {
 
     private Stack<Tag> stack;
-
+    
     private ScriptExecutionContext scriptExecutionContext;
     private static boolean isSkipTagExecute;
     private static boolean isTtsAllowed = true;
@@ -53,8 +54,15 @@ public class VxmlExecutionContext {
             return scriptExecutionContext.executeScript(script);
         } catch (ScriptException e) {
             System.err.println("SCRIPT:" + script);
-            e.printStackTrace();
-            System.exit(1);
+           throw new VxmlException("Script failure:" + script, e);
+        }
+    }
+    
+    public Object executeScriptNullIfUndefined(String script) {
+        try {
+            return scriptExecutionContext.executeScriptNullIfUndefined(script);
+        } catch (ScriptException e) {
+            
         }
         return null;
     }
@@ -63,14 +71,16 @@ public class VxmlExecutionContext {
         try {
             return scriptExecutionContext.executeScript(script);
         } catch (ScriptException e) {
-            e.printStackTrace();
-            System.exit(1);
+            throw new VxmlException("Script failure:" + script , e);
         }
-        return null;
     }
     
     public void assignScriptVar(String var, Object val) {
         scriptExecutionContext.put(var, val);
+    }
+    
+    public Object getScriptVar(String var) {
+        return scriptExecutionContext.get(var);
     }
 
     public static String getDocBaseUrl() {
@@ -118,5 +128,6 @@ public class VxmlExecutionContext {
     public static void setTtsAllowed(boolean tts) {
         VxmlExecutionContext.isTtsAllowed = tts;
     }
+
 
 }

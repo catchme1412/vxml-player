@@ -1,32 +1,33 @@
 package com.vxml.parser;
 
 import java.net.URI;
-import java.util.Stack;
 
 import org.w3c.dom.Document;
 
 import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.store.DocumentStore;
-import com.vxml.tag.Tag;
 
 public class VxmlDoc {
 
+    private String documentUrl;
+    
     private Document xmlDoc;
-    private Stack<Tag> stack;
+//    private Stack<Tag> stack;
     private DocumentStore documentStore;
 
-    public VxmlDoc(Document xml) {
-        xmlDoc = xml;
-        stack = new Stack<Tag>();
-    }
+//    public VxmlDoc(Document xml) {
+//        xmlDoc = xml;
+////        stack = new Stack<Tag>();
+//    }
 
     public VxmlDoc(String string) {
+        this.setDocumentUrl(string);
         URI uri;
         uri = VxmlBrowser.getContext().getFullUri(string);
         documentStore = new DocumentStore();
         xmlDoc = documentStore.getDoc(uri);
-        stack = new Stack<Tag>();
+//        stack = new Stack<Tag>();
 
     }
 
@@ -63,6 +64,14 @@ public class VxmlDoc {
 
     public void play() throws Event {
         new VxmlParser().parse(this);
+    }
+
+    public String getDocumentUrl() {
+        return documentUrl;
+    }
+
+    public void setDocumentUrl(String documentUrl) {
+        this.documentUrl = documentUrl;
     }
 
 }

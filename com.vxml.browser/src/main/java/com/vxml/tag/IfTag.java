@@ -6,7 +6,7 @@ import com.vxml.core.browser.VxmlBrowser;
 
 public class IfTag extends AbstractTag {
 
-    private boolean isIfConditionTrue;
+    private Boolean isIfConditionTrue;
     
 	public IfTag(Node node) {
 		super(node);
@@ -20,6 +20,7 @@ public class IfTag extends AbstractTag {
 	public void execute() {
 	    String cond = getAttribute("cond");
         isIfConditionTrue = (Boolean) VxmlBrowser.getContext().executeScript(cond + ";");
+        isIfConditionTrue = isIfConditionTrue != null ? isIfConditionTrue : false;
         setSkipExecute(isIfConditionTrue);
         VxmlBrowser.getContext().executeScript("_vxmlExecutionContext.ifCondition=" + isIfConditionTrue);
 	    if (isIfConditionTrue) {

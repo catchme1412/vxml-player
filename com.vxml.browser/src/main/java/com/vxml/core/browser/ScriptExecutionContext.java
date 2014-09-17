@@ -12,20 +12,28 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import com.sun.istack.internal.logging.Logger;
+
 public class ScriptExecutionContext {
 
+    private static final Logger log = Logger.getLogger(ScriptExecutionContext.class);
     private ScriptEngineManager manager;
     private ScriptEngine engine;
 
-    ///newCallController.htm?dnis=8886564546&ani=19733689500&uuid=684CB6BA3CCC11E4B810B0FAEB421300&newCallSuccess=true
+    public static final String SCRIPT_EXECUTION_NAME_SPACE = "_vxmlExecutionContext";
+
+    // /newCallController.htm?dnis=8886564546&ani=19733689500&uuid=684CB6BA3CCC11E4B810B0FAEB421300&newCallSuccess=true
     public ScriptExecutionContext() throws ScriptException {
         manager = new ScriptEngineManager();
         engine = manager.getEngineByName("js");
         engine.eval("var application={};");
+        engine.eval("application.lastresult$={}");
         engine.eval("application.ANI='19733689500';");
         engine.eval("application.UUID='684CB6BA3CCC11E4B810B0FAEB421300';");
+        engine.eval("application.lastresult$.inputmode='dtmf'");
         engine.eval("var session={};session.telephone={};session.telephone.dnis=8886564546;");
-        engine.eval("var _vxmlExecutionContext={};");
+        engine.eval("var " + SCRIPT_EXECUTION_NAME_SPACE + "={};");
+        engine.eval(SCRIPT_EXECUTION_NAME_SPACE + ".dtmfInput=null;");
         engine.eval("var event;");
     }
 
@@ -39,6 +47,19 @@ public class ScriptExecutionContext {
     public Object executeScript(InputStream script) throws ScriptException {
 
         return engine.eval(new InputStreamReader(script));
+    }
+
+    public Object executeScriptNullIfUndefined(String script) {
+        // TODO Auto-generated method stub
+        try {
+            if (!script.endsWith(";")) {
+                script += ";";
+            }
+            return engine.eval(script);
+        } catch (Exception e) {
+            log.warning(e.getCause().getMessage());
+        }
+        return null;
     }
 
     public void put(String key, Object val) {
@@ -64,7 +85,13 @@ public class ScriptExecutionContext {
         Invocable invocable = (Invocable) engine;
 
         // Invoke the methods defined in the script file
-//        invocable.invokeFunction("parseXmlWithAttrToObject", "/opt/orbitz/code/web-ivr/src/main/webapp/ivr/common/js/parseXmlWithAttrToObject.js");
+        // invocable.invokeFunction("parseXmlWithAttrToObject",
+        // "/opt/orbitz/code/web-ivr/src/main/webapp/ivr/common/js/parseXmlWithAttrToObject.js");
 
     }
+
+    public Object get(String var) {
+        return engine.get(var);
+    }
+
 }

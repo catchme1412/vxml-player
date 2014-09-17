@@ -30,8 +30,8 @@ public class VxmlBrowser {
 	public void start() throws VxmlException, URISyntaxException, Event {
 	    URI uri = new URI(entryPointUrl);
 	    context.setDocBaseUrl(uri.getScheme() + "://" + uri.getAuthority());
-        Document xml = new DocumentStore().getDoc(uri);
-		VxmlDoc vxmlDoc = new VxmlDoc(xml);
+//        Document xml = new DocumentStore().getDoc(uri);
+		VxmlDoc vxmlDoc = new VxmlDoc(entryPointUrl);
 		vxmlDoc.play();
 	}
 
@@ -45,7 +45,7 @@ public class VxmlBrowser {
 	
 	public static void main(String[] args) throws VxmlException, URISyntaxException, Event {
 		VxmlBrowser vxmlBrowser = new VxmlBrowser();
-		vxmlBrowser.setEntryPointUrl("http://localhost:8080/javascript/index.html");
+		vxmlBrowser.setEntryPointUrl("http://localhost:8585/ivr/testing/sao.vxml");
 		vxmlBrowser.start();
 	}
 

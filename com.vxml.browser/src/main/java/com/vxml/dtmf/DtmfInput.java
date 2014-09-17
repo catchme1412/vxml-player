@@ -24,12 +24,12 @@ public class DtmfInput {
 		return value;
 	}
 
-	public String readWithTimeOut() {
-		System.out.print("Input(wait 5 sec)>");
+	public String readWithTimeOut(int timeout) {
+		System.out.print("Input(wait " + (timeout/1000) + " sec)>");
 		ReadThread myThread = new ReadThread();
 		myThread.start();
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(timeout);
 		} catch (InterruptedException e) {
 			// Do nothing
 		}

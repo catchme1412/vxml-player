@@ -14,35 +14,37 @@ public class NativeCommand {
         execute(output, cmd);
     }
 
-    public void play(String waveFile) {
+    public Process play(String waveFile) {
 
         StringBuffer output = new StringBuffer();
         String[] cmd = { "/bin/sh", "-c", "wget " + waveFile + " -O /tmp/ivr.wav" };
         execute(output, cmd);
         String[] cmdWav = { "/bin/sh", "-c", "play /tmp/ivr.wav" };
-        execute(output, cmdWav);
+        return execute(output, cmdWav);
 
     }
 
-    private void execute(StringBuffer output, String[] cmd) {
+    private Process execute(StringBuffer output, String[] cmd) {
         try {
             Process p = Runtime.getRuntime().exec(cmd);
-            p.waitFor();
+            
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
             String line = "";
             while ((line = reader.readLine()) != null) {
                 output.append(line + "\n");
             }
-
+            return p;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public static void main(String[] args) throws Exception {
         new NativeCommand().speak("testing ");
-        new NativeCommand().play("http://ivraudio.orbitz.net/common-audio/posOptions.wav");
+        Process p = new NativeCommand().play("http://ivraudio.orbitz.net/common-audio/posOptions.wav");
+        p.destroy();
     }
 
 }

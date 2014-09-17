@@ -47,6 +47,7 @@ public class DocumentStore  {
 				e.printStackTrace();
 			}
 		}
+		doc.setDocumentURI(uri.toString());
 		return doc;
 	}
 

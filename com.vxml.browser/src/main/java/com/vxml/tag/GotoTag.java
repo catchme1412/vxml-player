@@ -9,7 +9,7 @@ import com.vxml.parser.VxmlDoc;
 public class GotoTag extends AbstractTag {
 
     private String target;
-    
+
     public GotoTag(Node node) {
         super(node);
     }
@@ -20,14 +20,21 @@ public class GotoTag extends AbstractTag {
         String next = getAttribute("next");
         String expr = getAttribute("expr");
         target = src != null ? src : next;
-        target = (String) (target != null ? target : VxmlBrowser.getContext().executeScript(expr));
+        String executeScript = null;
+        try {
+            executeScript = (String) VxmlBrowser.getContext().executeScript(expr);
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        target = (String) (target != null ? target : executeScript);
     }
 
     @Override
     public void execute() throws Event {
         if (target.startsWith("#")) {
             Tag form = VxmlBrowser.getContext().getTag(target.substring(1));
-            ((AbstractTag)form).tryExecute();
+            ((AbstractTag) form).tryExecute();
         } else {
             new VxmlDoc(target).play();
         }

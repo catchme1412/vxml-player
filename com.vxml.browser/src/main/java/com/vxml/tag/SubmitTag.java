@@ -42,14 +42,9 @@ public class SubmitTag extends AbstractTag {
                 queryParams.append(VxmlBrowser.getContext().executeScript(nameListArray[i] + ";"));
                 queryParams.append("&");
             }
-            Document result;
-			try {
 				//TODO enable POST method
-				result = new DocumentStore().getDoc(new URI(queryParams.toString()));
-				new VxmlDoc(result).play();
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			}
+//				result = new DocumentStore().getDoc(new URI(queryParams.toString()));
+				new VxmlDoc(queryParams.toString()).play();
         }
         
     }
