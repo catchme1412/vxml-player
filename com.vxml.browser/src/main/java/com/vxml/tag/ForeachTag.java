@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.w3c.dom.Node;
 
+import sun.org.mozilla.javascript.internal.NativeArray;
+
 import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
 
@@ -16,6 +18,7 @@ import com.vxml.core.browser.VxmlBrowser;
 public class ForeachTag extends AbstractTag {
 
 	private boolean isSkipTagBackup;
+    private String item;
 
 	public ForeachTag(Node node) {
 		super(node);
@@ -24,6 +27,8 @@ public class ForeachTag extends AbstractTag {
 	@Override
 	public void startTag() {
 		isSkipTagBackup = isSkipExecute();
+		item = getAttribute("item");
+		VxmlBrowser.getContext().executeScript("var " + item);
 	}
 
 	@Override
@@ -31,8 +36,7 @@ public class ForeachTag extends AbstractTag {
 
 		setSkipExecute(false);
 		String arrayVar = getAttribute("array");
-		String item = getAttribute("item");
-		VxmlBrowser.getContext().executeScript("var " + item);
+		
 		Object array = VxmlBrowser.getContext().executeScript(arrayVar);
 		if (array instanceof List) {
 			for (Object o : (List) array) {
@@ -41,10 +45,27 @@ public class ForeachTag extends AbstractTag {
 				} else {
 					VxmlBrowser.getContext().executeScript(item + "=" + o);
 				}
-				System.out.println("LOOOP:" + o);
 				executeChildTree(getNode());
-				// setSkipExecute(true);
 			}
+		}
+		if (array instanceof NativeArray) {
+		    NativeArray arr = (NativeArray) array;
+		    Object [] a = new Object[(int) arr.getLength()];
+		    for (Object o : arr.getIds()) {
+		        int index = (Integer) o;
+		        a[index] = arr.get(index, null);
+		        Object val = a[index];
+//		        if (val instanceof String) {
+//                    VxmlBrowser.getContext().executeScript(item + "='" + val + "'");
+//                } else {
+//                    VxmlBrowser.getContext().executeScript(item + "=" + val);
+//                }
+		        
+		        VxmlBrowser.getContext().assignScriptVar(item, val);
+                System.out.println("LOOOP:" + o);
+                executeChildTree(getNode());
+		    }
+		    
 		}
 		setSkipExecute(true);
 	}

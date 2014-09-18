@@ -8,23 +8,21 @@ import com.vxml.core.browser.VxmlBrowser;
 
 public class ReturnTag extends AbstractTag {
 
+    private String subdialogName;
+    
     public ReturnTag(Node node) {
         super(node);
     }
 
     @Override
     public void startTag() {
-        // if (null == getSubdialogName()) {
-        // throw new VxmlException("<return> expected inside <subdialog> only:"
-        // + this.getNode().getOwnerDocument().getDocumentURI());
-        // }
+        subdialogName = (String) VxmlBrowser.getContext().executeScript(
+                ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName");
     }
 
     @Override
     public void execute() throws ReturnFromSubdialogEvent {
         String namelist = getAttribute("namelist");
-        String subdialogName = (String) VxmlBrowser.getContext().executeScript(
-                ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName");
         for (String name : namelist.split(" ")) {
 
             String subDialogVariableName = subdialogName + "." + name;

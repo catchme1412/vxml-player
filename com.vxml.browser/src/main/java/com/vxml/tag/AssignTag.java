@@ -6,35 +6,39 @@ import com.vxml.core.browser.VxmlBrowser;
 
 public class AssignTag extends AbstractTag {
 
-	public AssignTag(Node node) {
-		super(node);
-	}
+    private String name;
 
-	@Override
-	public void execute() {
-	    String name = getAttribute("name");
-	    
-	    //subdialog variables are prefixed with the subdialog name. (Name scope)
-	    String expr = getAttribute("expr");
-	    if (expr == null) {
-	        VxmlBrowser.getContext().executeScript("var " + name + ";");
-	    } else {
-	        Object exprResult = expr;
-	        if (!(expr.endsWith("'") && expr.startsWith("'"))) {
-	            exprResult = VxmlBrowser.getContext().executeScript(expr);
-	        }
-	        if (exprResult instanceof String) {
-	            String e = (String)exprResult;
-	            if (!(e.startsWith("'") && e.startsWith("'"))) {
-	                e = "'" + e + "'";
-	            }
-	            VxmlBrowser.getContext().executeScript(name + "=" + e + "");
-	        } else {
-	            VxmlBrowser.getContext().assignScriptVar(name, exprResult);
-	        }
-	    }
-		
-	}
+    public AssignTag(Node node) {
+        super(node);
+    }
 
+    @Override
+    public void startTag() {
+        name = getAttribute("name");
+        VxmlBrowser.getContext().executeScript("var " + name);
+    }
+
+    @Override
+    public void execute() {
+        name = getAttribute("name");
+
+        String expr = getAttribute("expr");
+        if (expr != null) {
+            Object exprResult = expr;
+            if (!(expr.endsWith("'") && expr.startsWith("'"))) {
+                exprResult = VxmlBrowser.getContext().executeScriptNullIfUndefined(expr);
+            }
+            if (exprResult instanceof String) {
+                String e = (String) exprResult;
+                if (!(e.startsWith("'") && e.startsWith("'"))) {
+                    e = "'" + e + "'";
+                }
+                VxmlBrowser.getContext().executeScript(name + "=" + e + "");
+            } else {
+                VxmlBrowser.getContext().assignScriptVar(name, exprResult);
+            }
+        }
+
+    }
 
 }

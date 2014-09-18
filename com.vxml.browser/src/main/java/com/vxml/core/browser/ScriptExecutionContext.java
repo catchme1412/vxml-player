@@ -6,17 +6,17 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.logging.Logger;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import com.sun.istack.internal.logging.Logger;
 
 public class ScriptExecutionContext {
 
-    private static final Logger log = Logger.getLogger(ScriptExecutionContext.class);
+    private static final Logger log = Logger.getAnonymousLogger();
     private ScriptEngineManager manager;
     private ScriptEngine engine;
 
@@ -57,7 +57,8 @@ public class ScriptExecutionContext {
             }
             return engine.eval(script);
         } catch (Exception e) {
-            log.warning(e.getCause().getMessage());
+            System.err.println("SCRIPT FAILURE:" + e.getMessage());
+            
         }
         return null;
     }

@@ -13,11 +13,11 @@ public class ElseTag extends AbstractTag {
 	@Override
 	public void startTag() {
 	    Boolean isIfCondition = (Boolean) VxmlBrowser.getContext().executeScript("_vxmlExecutionContext.ifCondition");
-        if (!isSkipExecute() && isIfCondition) {
-            setSkipExecute(true);
-        } else {
-            setSkipExecute(false);
-        }
+	    if (isIfCondition) {
+	        setSkipExecute(true);
+	    } else {
+	        setSkipExecute(false);
+	    }
 	}
 
 	@Override

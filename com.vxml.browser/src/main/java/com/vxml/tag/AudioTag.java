@@ -18,18 +18,20 @@ public class AudioTag extends AbstractTag {
         String expr = getAttribute("expr");
 
         try {
-            String convert = null;
+            Object convert = null;
             if (expr != null) {
-                convert = VxmlBrowser.getContext().executeScript(expr).toString();
+                convert = VxmlBrowser.getContext().executeScript(expr);
             }
-            String converted = src != null ? src : convert;
-            System.out.println("Audio:" + converted);
-            try {
-                converted = converted.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
-                new NativeCommand().play(converted);
-                VxmlExecutionContext.setTtsAllowed(false);
-            } catch (Exception e) {
-                e.printStackTrace();
+            String converted = (String) (src != null ? src : convert);
+            if (converted != null) {
+                System.out.println("Audio:" + converted);
+                try {
+                    converted = converted.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
+                    new NativeCommand().play(converted);
+                    VxmlExecutionContext.setTtsAllowed(false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

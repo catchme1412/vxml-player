@@ -18,18 +18,18 @@ public class VarTag extends AbstractTag {
         VxmlBrowser.getContext().executeScript("var " + name + ";");
         if (expr != null) {
             try {
-                
-                VxmlBrowser.getContext().executeScript(name + "=" + expr);
+
+                VxmlBrowser.getContext().assignScriptVar(name, VxmlBrowser.getContext().executeScript(expr));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            try {
-//                Object value = VxmlBrowser.getContext().executeScript(expr);
-//                // override if possible
-//                VxmlBrowser.getContext().assignScriptVar(name, value);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            // try {
+            // Object value = VxmlBrowser.getContext().executeScript(expr);
+            // // override if possible
+            // VxmlBrowser.getContext().assignScriptVar(name, value);
+            // } catch (Exception e) {
+            // e.printStackTrace();
+            // }
         }
     }
 

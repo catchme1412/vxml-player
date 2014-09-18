@@ -19,6 +19,7 @@ public class TextTag extends AbstractTag {
 	public void execute() {
 		if (!text.isEmpty() && VxmlExecutionContext.isTtsAllowed()) {
 			try {
+			    System.out.println(text);
 				new NativeCommand().speak(text);
 			} catch (Exception e) {
 				e.printStackTrace();

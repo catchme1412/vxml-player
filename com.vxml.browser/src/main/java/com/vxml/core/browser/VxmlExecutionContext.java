@@ -9,7 +9,6 @@ import java.util.Stack;
 
 import javax.script.ScriptException;
 
-import com.sun.istack.internal.logging.Logger;
 import com.vxml.core.VxmlException;
 import com.vxml.tag.Tag;
 
@@ -50,21 +49,11 @@ public class VxmlExecutionContext {
     }
 
     public Object executeScript(String script) {
-        try {
-            return scriptExecutionContext.executeScript(script);
-        } catch (ScriptException e) {
-            System.err.println("SCRIPT:" + script);
-           throw new VxmlException("Script failure:" + script, e);
-        }
+        return executeScriptNullIfUndefined(script);
     }
     
     public Object executeScriptNullIfUndefined(String script) {
-        try {
             return scriptExecutionContext.executeScriptNullIfUndefined(script);
-        } catch (ScriptException e) {
-            
-        }
-        return null;
     }
     
     public Object executeScript(InputStream script) {

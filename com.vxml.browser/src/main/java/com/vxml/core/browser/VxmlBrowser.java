@@ -5,12 +5,9 @@ import java.net.URISyntaxException;
 
 import javax.script.ScriptException;
 
-import org.w3c.dom.Document;
-
 import com.vxml.browser.event.Event;
 import com.vxml.core.VxmlException;
 import com.vxml.parser.VxmlDoc;
-import com.vxml.store.DocumentStore;
 
 public class VxmlBrowser {
 
@@ -61,7 +58,6 @@ public class VxmlBrowser {
 	}
 
 	public void setContext(VxmlExecutionContext context) {
-	    
 		this.context = context;
 	}
 }
