@@ -5,9 +5,9 @@ import org.w3c.dom.NodeList;
 
 import com.vxml.browser.event.Event;
 import com.vxml.browser.event.ReturnFromSubdialogEvent;
-import com.vxml.core.browser.ScriptExecutionContext;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.core.browser.VxmlExecutionContext;
+import com.vxml.core.browser.VxmlScriptEngine;
 import com.vxml.parser.VxmlDoc;
 
 public class SubdialogTag extends AbstractTag {
@@ -23,7 +23,7 @@ public class SubdialogTag extends AbstractTag {
         name = getAttribute("name");
         VxmlBrowser.getContext().executeScript("var " + name + "={}");
         VxmlBrowser.getContext().executeScript(
-                ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName='" + name+"'");
+                VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName='" + name+"'");
     }
 
     @Override

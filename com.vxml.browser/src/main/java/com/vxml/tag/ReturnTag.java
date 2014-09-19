@@ -3,8 +3,8 @@ package com.vxml.tag;
 import org.w3c.dom.Node;
 
 import com.vxml.browser.event.ReturnFromSubdialogEvent;
-import com.vxml.core.browser.ScriptExecutionContext;
 import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.core.browser.VxmlScriptEngine;
 
 public class ReturnTag extends AbstractTag {
 
@@ -17,7 +17,7 @@ public class ReturnTag extends AbstractTag {
     @Override
     public void startTag() {
         subdialogName = (String) VxmlBrowser.getContext().executeScript(
-                ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName");
+                VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName");
     }
 
     @Override
