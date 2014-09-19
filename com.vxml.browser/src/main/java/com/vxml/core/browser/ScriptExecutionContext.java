@@ -74,7 +74,7 @@ public class ScriptExecutionContext {
 
         // Create ScriptEngine
         ScriptEngine engine = engineManager.getEngineByName("ECMAScript");
-
+        engine.eval("var a = {\\\"A\\\":true};");
         // Create file and reader instance for reading the script file
         File file = new File("/opt/orbitz/code/web-ivr/src/main/webapp/ivr/common/js/parseXmlWithAttrToObject.js");
         Reader reader = new FileReader(file);

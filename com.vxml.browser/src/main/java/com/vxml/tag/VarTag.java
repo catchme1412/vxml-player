@@ -15,10 +15,9 @@ public class VarTag extends AbstractTag {
         // System.out.println(getAttribute("name"));
         String name = getAttribute("name");
         String expr = getAttribute("expr");
-        VxmlBrowser.getContext().executeScript("var " + name + ";");
+        VxmlBrowser.getContext().executeScript("var " + name);
         if (expr != null) {
             try {
-
                 VxmlBrowser.getContext().assignScriptVar(name, VxmlBrowser.getContext().executeScript(expr));
             } catch (Exception e) {
                 e.printStackTrace();

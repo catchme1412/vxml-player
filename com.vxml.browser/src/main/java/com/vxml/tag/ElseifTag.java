@@ -7,7 +7,7 @@ import com.vxml.core.browser.VxmlBrowser;
 public class ElseifTag extends AbstractTag {
 
     private boolean isSkipBackup;
-    
+
     public ElseifTag(Node node) {
         super(node);
     }
@@ -15,7 +15,13 @@ public class ElseifTag extends AbstractTag {
     @Override
     public void startTag() {
         isSkipBackup = isSkipExecute();
-        boolean isIfCondition = (Boolean) VxmlBrowser.getContext().executeScript("_vxmlExecutionContext.ifCondition");
+
+    }
+
+    @Override
+    public void execute() {
+        Boolean isIfCondition = (Boolean) VxmlBrowser.getContext().executeScript(
+                "_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel);
         if (!isIfCondition) {
             String cond = getAttribute("cond");
             Boolean elseIfCondition = (Boolean) VxmlBrowser.getContext().executeScript(cond);
@@ -30,11 +36,7 @@ public class ElseifTag extends AbstractTag {
         } else {
             setSkipExecute(true);
         }
-        
     }
-
-    @Override
-    public void execute() {}
 
     @Override
     public void endTag() {

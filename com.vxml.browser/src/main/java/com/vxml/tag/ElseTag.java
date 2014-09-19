@@ -6,22 +6,23 @@ import com.vxml.core.browser.VxmlBrowser;
 
 public class ElseTag extends AbstractTag {
 
-	public ElseTag(Node node) {
-		super(node);
-	}
-	
-	@Override
-	public void startTag() {
-	    Boolean isIfCondition = (Boolean) VxmlBrowser.getContext().executeScript("_vxmlExecutionContext.ifCondition");
-	    if (isIfCondition) {
-	        setSkipExecute(true);
-	    } else {
-	        setSkipExecute(false);
-	    }
-	}
+    public ElseTag(Node node) {
+        super(node);
+    }
 
-	@Override
-	public void execute() {
-	    
-	}
+    @Override
+    public void startTag() {
+
+    }
+
+    @Override
+    public void execute() {
+        Boolean isIfCondition = (Boolean) VxmlBrowser.getContext().executeScript(
+                "_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel);
+        if (isIfCondition) {
+            setSkipExecute(true);
+        } else {
+            setSkipExecute(false);
+        }
+    }
 }

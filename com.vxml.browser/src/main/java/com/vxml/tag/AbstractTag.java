@@ -10,6 +10,8 @@ public abstract class AbstractTag implements Tag {
     private Node node;
 
     private static boolean isSkipExecute;
+    
+    protected static int ifConditionLevel;
 
     public AbstractTag(Node node) {
         this.node = node;

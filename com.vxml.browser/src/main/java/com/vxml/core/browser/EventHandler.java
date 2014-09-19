@@ -16,6 +16,7 @@ public class EventHandler {
 
 	public void handleEvent(String eventType) throws Event {
 		eventMap.get(eventType).execute();
+		clearEvent();
 	}
 
 	

@@ -50,17 +50,21 @@ public class FilledTag extends AbstractTag {
 			String value = new DtmfInput().readWithTimeOut(5000);
 			if (value != null) {
 				String fieldName = getFieldName();
-				if (value.matches("-?\\d+(\\.\\d+)?")) {
-					VxmlBrowser.getContext().executeScript("var " + fieldName + "=" + value + ";");
-				} else {
-					VxmlBrowser.getContext().executeScript("var " + fieldName + "='" + value + "';");
-				}
+//				if (value.matches("-?\\d+(\\.\\d+)?")) {
+//					VxmlBrowser.getContext().executeScript("var " + fieldName + "=" + value + ";");
+//				} else {
+//					VxmlBrowser.getContext().executeScript("var " + fieldName + "='" + value + "';");
+//				}
+				VxmlBrowser.getContext().assignScriptVar(fieldName, value);
 
 			} else {
 				// no input
 				VxmlBrowser.getContext().getEventHandler().fireEvent("noinput");
 				if (noinputTag != null) {
+				    VxmlBrowser.getContext().getEventHandler().clearEvent();
 					executeChildTree(noinputTag.getNode());
+				} else {
+				    VxmlBrowser.getContext().getEventHandler().clearEvent();
 				}
 //				AbstractTag.setSkipExecute(true);
 			}
