@@ -2,6 +2,7 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
+import com.vxml.core.browser.ScriptExecutionContext;
 import com.vxml.core.browser.VxmlBrowser;
 
 public class ElseifTag extends AbstractTag {
@@ -25,7 +26,8 @@ public class ElseifTag extends AbstractTag {
             if (elseIfCondition != null && elseIfCondition) {
                 setSkipExecute(false);
                 // Just to skip else tag
-                VxmlBrowser.getContext().executeScript("_vxmlExecutionContext.ifCondition=true");
+                VxmlBrowser.getContext().executeScript(ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE
+                        + ".ifCondition=true");
             } else {
                 setSkipExecute(true);
             }

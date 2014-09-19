@@ -56,6 +56,7 @@ public class ScriptExecutionContext {
             }
             return engine.eval(script);
         } catch (Exception e) {
+            System.err.println(script);
             System.err.println("SCRIPT FAILURE: " + e.getMessage());
             
         }

@@ -22,7 +22,9 @@ public class GotoTag extends AbstractTag {
         target = src != null ? src : next;
         String executeScript = null;
         try {
-            executeScript = (String) VxmlBrowser.getContext().executeScript(expr);
+            if (expr != null) {
+                executeScript = (String) VxmlBrowser.getContext().executeScript(expr);
+            }
 
         } catch (Exception e) {
             System.err.println(e.getMessage());

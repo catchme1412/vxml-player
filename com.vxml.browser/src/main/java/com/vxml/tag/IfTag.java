@@ -16,7 +16,8 @@ public class IfTag extends AbstractTag {
     @Override
     public void startTag() {
         ifConditionLevel++;
-        VxmlBrowser.getContext().executeScript("var _vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel);
+//        VxmlBrowser.getContext().assignScriptVar("_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel, null);
+        VxmlBrowser.getContext().executeScript("_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel + "=false");
         isSkipBackup = isSkipExecute();
     }
 
@@ -36,8 +37,8 @@ public class IfTag extends AbstractTag {
 
     @Override
     public void endTag() {
+        VxmlBrowser.getContext().executeScript("_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel+"=false");
         ifConditionLevel--;
-        VxmlBrowser.getContext().executeScript("var _vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel);
         setSkipExecute(isSkipBackup);
     }
 
