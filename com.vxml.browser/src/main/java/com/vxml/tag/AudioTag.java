@@ -2,9 +2,9 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
+import com.vxml.audio.NativeCommand;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.core.browser.VxmlExecutionContext;
-import com.vxml.tts.NativeCommand;
 
 public class AudioTag extends AbstractTag {
 

@@ -51,4 +51,9 @@ public abstract class XmlUtils {
 		return sw.toString();
 	}
 
+	
+	public static boolean  isEmptyOrComment(Node node) {
+		return node.getNodeType() == Node.COMMENT_NODE
+                || (node.getNodeType() == Node.TEXT_NODE && node.getTextContent().trim().isEmpty());
+	}
 }

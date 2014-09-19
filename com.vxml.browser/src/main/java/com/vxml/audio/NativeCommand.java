@@ -1,4 +1,4 @@
-package com.vxml.tts;
+package com.vxml.audio;
 
 import java.io.BufferedReader;
 import java.io.IOException;

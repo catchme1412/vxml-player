@@ -34,17 +34,14 @@ public abstract class AbstractTag implements Tag {
 
     // similar to walk
     public void executeChildTree(Node startNode) throws Event {
-        if (node.getNodeType() == Node.COMMENT_NODE
-                || (node.getNodeType() == Node.TEXT_NODE && node.getTextContent().trim().isEmpty())) {
+        if (XmlUtils.isEmptyOrComment(startNode)) {
             return;
         }
 
         // recurse
         for (Node child = startNode.getFirstChild(); child != null; child = child.getNextSibling()) {
             AbstractTag tag = (AbstractTag) TagFactory.get(child);
-            if (tag.getNode().getNodeType() == Node.COMMENT_NODE
-                    || (tag.getNode().getNodeType() == Node.TEXT_NODE && tag.getNode().getTextContent().trim()
-                            .isEmpty())) {
+            if (XmlUtils.isEmptyOrComment(child)) {
                 continue;
             }
             // System.out.println("START:" + node.getNodeType() + "::" + tag);

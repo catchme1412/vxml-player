@@ -13,6 +13,7 @@ import com.vxml.browser.event.Event;
 import com.vxml.tag.AbstractTag;
 import com.vxml.tag.Tag;
 import com.vxml.tag.TagFactory;
+import com.vxml.utils.XmlUtils;
 
 public class VxmlParser {
 
@@ -47,8 +48,7 @@ public class VxmlParser {
     }
 
     public void walk(Node node) throws Event {
-        if (node.getNodeType() == Node.COMMENT_NODE
-                || (node.getNodeType() == Node.TEXT_NODE && node.getTextContent().trim().isEmpty())) {
+        if (XmlUtils.isEmptyOrComment(node)) {
             return;
         }
         Tag tag = TagFactory.get(node);

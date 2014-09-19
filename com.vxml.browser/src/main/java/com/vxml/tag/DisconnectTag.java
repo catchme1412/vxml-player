@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.w3c.dom.Node;
 
+import com.vxml.audio.NativeCommand;
 import com.vxml.browser.event.Event;
-import com.vxml.tts.NativeCommand;
 
 public class DisconnectTag extends AbstractTag {
 
