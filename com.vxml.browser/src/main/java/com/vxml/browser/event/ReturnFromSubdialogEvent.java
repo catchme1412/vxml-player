@@ -2,7 +2,9 @@ package com.vxml.browser.event;
 
 public class ReturnFromSubdialogEvent extends Event {
 
-	public ReturnFromSubdialogEvent() {
+    private static final long serialVersionUID = 1L;
+    
+    public ReturnFromSubdialogEvent() {
 		super("ReturnFromSubdialogEvent");
 	}
 

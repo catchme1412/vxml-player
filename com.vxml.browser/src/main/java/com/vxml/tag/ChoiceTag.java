@@ -17,12 +17,11 @@ public class ChoiceTag extends AbstractTag {
 	@Override
 	public void execute() throws Event {
 		String dtmf = getAttribute("dtmf");
-		String value = null;
-		String dtmfInput = (String) VxmlBrowser.getContext().executeScript(ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".dtmfInput");
+		String dtmfInput = (String) VxmlBrowser.getContext().getScriptVar(ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".dtmfInput");
 		if (dtmfInput == null) {
-		    value = new DtmfInput().read();
-		    if (value != null) {
-		        VxmlBrowser.getContext().executeScript(ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".dtmfInput='" + value+"'");
+		    dtmfInput = new DtmfInput().read();
+		    if (dtmfInput != null) {
+		        VxmlBrowser.getContext().assignScriptVar(ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".dtmfInput" , dtmfInput);
 		    }
 		}
 		if (dtmf.equals(dtmfInput)) {

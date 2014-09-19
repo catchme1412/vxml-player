@@ -4,6 +4,11 @@ import org.w3c.dom.Node;
 
 public class DoNothingTag extends AbstractTag {
 
+    
+    public DoNothingTag() {
+        super(null);
+    }
+    
 	public DoNothingTag(Node node) {
 		super(node);
 	}

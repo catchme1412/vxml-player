@@ -5,7 +5,9 @@ import javax.script.ScriptException;
 
 public class VxmlException extends RuntimeException {
 
-	public VxmlException(Exception e) {
+    private static final long serialVersionUID = 1L;
+
+    public VxmlException(Exception e) {
 		super(e);
 	}
 

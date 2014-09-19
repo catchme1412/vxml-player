@@ -1,15 +1,10 @@
 package com.vxml.tag;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.parser.VxmlDoc;
-import com.vxml.store.DocumentStore;
 
 public class SubmitTag extends AbstractTag {
 

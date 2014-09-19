@@ -24,7 +24,6 @@ public class SubdialogTag extends AbstractTag {
         VxmlBrowser.getContext().executeScript("var " + name + "={}");
         VxmlBrowser.getContext().executeScript(
                 ScriptExecutionContext.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName='" + name+"'");
-        System.err.println("SUBDIALOG STARTS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + name);
     }
 
     @Override
@@ -77,7 +76,7 @@ public class SubdialogTag extends AbstractTag {
 
     @Override
     public void endTag() {
-        System.err.println("SUBDIALOG ENDS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" + name);
+        System.err.println("SUBDIALOG ENDS" + name);
     }
 
     public static void main(String[] args) {

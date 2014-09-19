@@ -37,7 +37,7 @@ public class ScriptExecutionContext {
         engine.eval("var event;");
     }
 
-    public Object executeScript(String script) throws ScriptException {
+    private Object executeScript(String script) throws ScriptException {
         if (!script.endsWith(";")) {
             script += ";";
         }
@@ -50,14 +50,13 @@ public class ScriptExecutionContext {
     }
 
     public Object executeScriptNullIfUndefined(String script) {
-        // TODO Auto-generated method stub
         try {
             if (!script.endsWith(";")) {
                 script += ";";
             }
             return engine.eval(script);
         } catch (Exception e) {
-            System.err.println("SCRIPT FAILURE:" + e.getMessage());
+            System.err.println("SCRIPT FAILURE: " + e.getMessage());
             
         }
         return null;
