@@ -1,8 +1,13 @@
 package com.vxml.browser;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import com.vxml.browser.event.Event;
+import com.vxml.core.VxmlException;
 import com.vxml.core.browser.VxmlBrowser;
 
 public class VxmlBrowserTest {
@@ -15,13 +20,12 @@ public class VxmlBrowserTest {
 	}
 
 	@Test
-	public void f() {
-		vxmlBrowser.setEntryPointUrl("");
+	public void f() throws VxmlException, URISyntaxException, Event, IOException {
+		vxmlBrowser.setEntryPointUrl("http://localhost:8080/javascript/index.html");
 		VxmlBrowserVerifier verifier = new VxmlBrowserVerifier(vxmlBrowser);
 		verifier.start();
-		Assert.assertEquals(verifier.nextAudioUrl(), "");
 		verifier.inputDtmf(2);
-		Assert.assertEquals(verifier.nextTTS(), "");
-		Assert.assertEquals(verifier.isDisconnected(),true);
+		Assert.assertEquals(verifier.next(), null);
+		Assert.assertEquals(verifier.isDisconnected(),null);
 	}
 }

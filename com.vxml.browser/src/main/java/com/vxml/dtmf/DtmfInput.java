@@ -2,6 +2,7 @@ package com.vxml.dtmf;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
@@ -9,11 +10,17 @@ public class DtmfInput {
 
     private String input;
 
+    private InputStream inputStream;
+    
+    public DtmfInput(InputStream in) {
+    	inputStream = in;
+    }
+    
     public String read() {
         String value = null;
         System.out.print("Input>");
         try {
-            Scanner in = new Scanner(System.in);
+            Scanner in = new Scanner(inputStream);
             if (in.hasNext()) {
                 value = in.next();
             }
@@ -41,7 +48,7 @@ public class DtmfInput {
     private class ReadThread extends Thread {
         @Override
         public void run() {
-            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader stdin = new BufferedReader(new InputStreamReader(inputStream));
 
             while (!isInterrupted()) {
                 try {

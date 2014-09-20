@@ -1,19 +1,20 @@
 package com.vxml.tag;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Node;
 
 import com.vxml.browser.event.Event;
+import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.parser.event.OutputListener;
 import com.vxml.utils.XmlUtils;
 
 public abstract class AbstractTag implements Tag {
 
     private Node node;
 
-    private Map<String, List> listeners;
-    
     private static boolean isSkipExecute;
     
     protected static int ifConditionLevel;
@@ -85,6 +86,7 @@ public abstract class AbstractTag implements Tag {
         } else {
             System.out.println("EXECUTING:" + this + "\t<=\t" + getNode().getOwnerDocument().getDocumentURI());
             execute();
+            VxmlBrowser.getContext().getEventHandler().invokeListeners(this);
         }
     }
 

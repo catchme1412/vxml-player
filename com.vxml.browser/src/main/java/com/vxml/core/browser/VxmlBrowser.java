@@ -1,5 +1,6 @@
 package com.vxml.core.browser;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -18,6 +19,8 @@ public class VxmlBrowser {
 		if (context != null) {
 			try {
 				context = new VxmlExecutionContext();
+				//default input is from keyboard
+				context.setDtmfSource(System.in);
 			} catch (ScriptException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

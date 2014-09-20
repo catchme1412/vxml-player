@@ -8,6 +8,8 @@ import com.vxml.core.browser.VxmlExecutionContext;
 
 public class AudioTag extends AbstractTag {
 
+	private String audioUrl;
+	
     public AudioTag(Node node) {
         super(node);
     }
@@ -22,12 +24,12 @@ public class AudioTag extends AbstractTag {
             if (expr != null) {
                 convert = VxmlBrowser.getContext().executeScript(expr);
             }
-            String converted = (String) (src != null ? src : convert);
-            if (converted != null) {
-                System.out.println("Audio:" + converted);
+            audioUrl = (String) (src != null ? src : convert);
+            if (audioUrl != null) {
+                System.out.println("Audio:" + audioUrl);
                 try {
-                    converted = converted.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
-                    new NativeCommand().play(converted);
+                	audioUrl = audioUrl.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
+                    new NativeCommand().play(audioUrl);
                     VxmlExecutionContext.setTtsAllowed(false);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -42,4 +44,9 @@ public class AudioTag extends AbstractTag {
     public void endTag() {
         VxmlExecutionContext.setTtsAllowed(true);
     }
+
+	public String getAudioUrl() {
+		return audioUrl;
+	}
+
 }

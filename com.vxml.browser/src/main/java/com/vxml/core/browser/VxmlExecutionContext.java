@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.script.ScriptException;
 
 import com.vxml.core.VxmlException;
+import com.vxml.parser.event.EventHandler;
 import com.vxml.tag.Tag;
 
 public class VxmlExecutionContext {
@@ -19,11 +20,14 @@ public class VxmlExecutionContext {
     private EventHandler eventHandler;
     
     //mainly for form when referred from goto
-    private Map<String, Tag> tagMap; 
+    private Map<String, Tag> tagMap;
+	private InputStream dtmfSource; 
 
     public VxmlExecutionContext() throws ScriptException {
         scriptExecutionContext = new ScriptExecutionContext();
         eventHandler = new EventHandler();
+        //default
+        dtmfSource = System.in;
         tagMap = new HashMap<String, Tag>();
     }
 
@@ -96,4 +100,12 @@ public class VxmlExecutionContext {
     public static void setTtsAllowed(boolean tts) {
         VxmlExecutionContext.isTtsAllowed = tts;
     }
+
+	public InputStream getDtmfSource() {
+		return dtmfSource;
+	}
+
+	public void setDtmfSource(InputStream dtmfSource) {
+		this.dtmfSource = dtmfSource;
+	}
 }

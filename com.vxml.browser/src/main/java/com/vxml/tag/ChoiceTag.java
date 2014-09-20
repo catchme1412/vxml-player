@@ -19,7 +19,7 @@ public class ChoiceTag extends AbstractTag {
 		String dtmf = getAttribute("dtmf");
 		String dtmfInput = (String) VxmlBrowser.getContext().getScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".dtmfInput");
 		if (dtmfInput == null) {
-		    dtmfInput = new DtmfInput().read();
+		    dtmfInput = new DtmfInput(VxmlBrowser.getContext().getDtmfSource()).read();
 		    if (dtmfInput != null) {
 		        VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".dtmfInput" , dtmfInput);
 		    }
