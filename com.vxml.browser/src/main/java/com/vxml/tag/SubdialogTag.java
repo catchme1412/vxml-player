@@ -30,7 +30,7 @@ public class SubdialogTag extends AbstractTag {
     public void execute() {
         String srcexpr = getAttribute("srcexpr");
         String src = getAttribute("src");
-        String target = getAttribute("name");
+//        String target = getAttribute("name");
         src = src != null ? src : (String) VxmlBrowser.getContext().executeScript(srcexpr);
 
         StringBuilder url = getUrl(src);
@@ -38,19 +38,9 @@ public class SubdialogTag extends AbstractTag {
             new VxmlDoc(url.toString()).play();
         } catch (Event e) {
             if (e instanceof ReturnFromSubdialogEvent) {
-                System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+                System.out.println("Returning from subdialog.........");
             }
-            // TODO Auto-generated catch block
         }
-        // StringBuilder r = null;
-        // try {
-        // r = new DocumentStore().getData(new URI(url.toString()));
-        // } catch (URISyntaxException e) {
-        // e.printStackTrace();
-        // }
-        // System.out.println("FFf" + r);
-        // VxmlBrowser.getContext().executeScript("var " + target + "='" +
-        // r.toString().replaceAll("'", "\\\\'") + "'");
 
     }
 

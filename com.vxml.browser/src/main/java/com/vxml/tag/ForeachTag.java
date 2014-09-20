@@ -40,11 +40,7 @@ public class ForeachTag extends AbstractTag {
 		Object array = VxmlBrowser.getContext().executeScript(arrayVar);
 		if (array instanceof List) {
 			for (Object o : (List) array) {
-				if (o instanceof String) {
-					VxmlBrowser.getContext().executeScript(item + "='" + o + "'");
-				} else {
-					VxmlBrowser.getContext().executeScript(item + "=" + o);
-				}
+				VxmlBrowser.getContext().assignScriptVar(item, o);
 				executeChildTree(getNode());
 			}
 		}
@@ -55,11 +51,6 @@ public class ForeachTag extends AbstractTag {
 		        int index = (Integer) o;
 		        a[index] = arr.get(index, null);
 		        Object val = a[index];
-//		        if (val instanceof String) {
-//                    VxmlBrowser.getContext().executeScript(item + "='" + val + "'");
-//                } else {
-//                    VxmlBrowser.getContext().executeScript(item + "=" + val);
-//                }
 		        
 		        VxmlBrowser.getContext().assignScriptVar(item, val);
                 System.out.println("LOOOP:" + o);

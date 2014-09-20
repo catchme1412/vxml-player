@@ -1,5 +1,8 @@
 package com.vxml.tag;
 
+import java.util.List;
+import java.util.Map;
+
 import org.w3c.dom.Node;
 
 import com.vxml.browser.event.Event;
@@ -9,6 +12,8 @@ public abstract class AbstractTag implements Tag {
 
     private Node node;
 
+    private Map<String, List> listeners;
+    
     private static boolean isSkipExecute;
     
     protected static int ifConditionLevel;
@@ -18,10 +23,11 @@ public abstract class AbstractTag implements Tag {
     }
 
     public void startTag() {
-
+    	//do nothing
     }
 
     public void endTag() {
+    	//do nothing
     }
 
     public Node getNode() {

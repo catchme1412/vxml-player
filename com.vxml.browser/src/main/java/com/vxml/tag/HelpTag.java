@@ -15,7 +15,6 @@ public class HelpTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-
 	}
 
 	@Override

@@ -5,7 +5,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 import javax.script.ScriptException;
 
@@ -14,38 +13,18 @@ import com.vxml.tag.Tag;
 
 public class VxmlExecutionContext {
 
-    private Stack<Tag> stack;
-    
     private ScriptExecutionContext scriptExecutionContext;
-    private static boolean isSkipTagExecute;
     private static boolean isTtsAllowed = true;
-    private static String docBaseUrl = "http://localhost:8080/javscript/";
+    private static String docBaseUrl;
     private EventHandler eventHandler;
     
-    //mainly for forms
+    //mainly for form when referred from goto
     private Map<String, Tag> tagMap; 
 
     public VxmlExecutionContext() throws ScriptException {
-        stack = new Stack<Tag>();
         scriptExecutionContext = new ScriptExecutionContext();
         eventHandler = new EventHandler();
         tagMap = new HashMap<String, Tag>();
-    }
-
-    public boolean isSkipTagExecute() {
-        return isSkipTagExecute;
-    }
-
-    public void setSkipTagExecute(boolean isSkipTagExecute) {
-        this.isSkipTagExecute = isSkipTagExecute;
-    }
-
-    public Tag push(Tag tag) {
-        return stack.push(tag);
-    }
-
-    public Tag pop() {
-        return stack.pop();
     }
 
     public Object executeScript(String script) {
@@ -117,6 +96,4 @@ public class VxmlExecutionContext {
     public static void setTtsAllowed(boolean tts) {
         VxmlExecutionContext.isTtsAllowed = tts;
     }
-
-
 }
