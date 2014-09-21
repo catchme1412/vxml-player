@@ -1,6 +1,8 @@
 package com.vxml.core.browser;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -21,13 +23,13 @@ public class VxmlExecutionContext {
     
     //mainly for form when referred from goto
     private Map<String, Tag> tagMap;
-	private InputStream dtmfSource; 
+	private BufferedReader dtmfSource; 
 
     public VxmlExecutionContext() throws ScriptException {
         scriptExecutionContext = new ScriptExecutionContext();
         eventHandler = new EventHandler();
         //default
-        dtmfSource = System.in;
+        dtmfSource = new BufferedReader(new InputStreamReader(System.in));
         tagMap = new HashMap<String, Tag>();
     }
 
@@ -101,11 +103,11 @@ public class VxmlExecutionContext {
         VxmlExecutionContext.isTtsAllowed = tts;
     }
 
-	public InputStream getDtmfSource() {
+	public BufferedReader getDtmfSource() {
 		return dtmfSource;
 	}
 
-	public void setDtmfSource(InputStream dtmfSource) {
+	public void setDtmfSource(BufferedReader dtmfSource) {
 		this.dtmfSource = dtmfSource;
 	}
 }

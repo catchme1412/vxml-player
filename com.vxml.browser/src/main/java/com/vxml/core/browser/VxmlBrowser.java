@@ -1,6 +1,7 @@
 package com.vxml.core.browser;
 
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -20,7 +21,7 @@ public class VxmlBrowser {
 			try {
 				context = new VxmlExecutionContext();
 				//default input is from keyboard
-				context.setDtmfSource(System.in);
+				context.setDtmfSource(new BufferedReader(new InputStreamReader(System.in)));
 			} catch (ScriptException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -47,7 +48,7 @@ public class VxmlBrowser {
 
 	public static void main(String[] args) throws VxmlException, URISyntaxException, Event {
 		VxmlBrowser vxmlBrowser = new VxmlBrowser();
-		vxmlBrowser.setEntryPointUrl("http://localhost:8585/ivr/testing/sao.vxml");
+		vxmlBrowser.setEntryPointUrl("http://localhost:8080/javascript/index.html");
 		vxmlBrowser.start();
 	}
 

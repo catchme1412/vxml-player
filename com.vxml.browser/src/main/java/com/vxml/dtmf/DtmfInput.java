@@ -2,25 +2,23 @@ package com.vxml.dtmf;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class DtmfInput {
 
     private String input;
 
-    private InputStream inputStream;
+    private BufferedReader stdin;
     
-    public DtmfInput(InputStream in) {
-    	inputStream = in;
+    public DtmfInput(BufferedReader in) {
+    	stdin = in;
     }
     
     public String read() {
         String value = null;
         System.out.print("Input>");
         try {
-            Scanner in = new Scanner(inputStream);
+            Scanner in = new Scanner(stdin);
             if (in.hasNext()) {
                 value = in.next();
             }
@@ -46,10 +44,9 @@ public class DtmfInput {
     }
 
     private class ReadThread extends Thread {
-        @Override
-        public void run() {
-            BufferedReader stdin = new BufferedReader(new InputStreamReader(inputStream));
 
+		@Override
+        public void run() {
             while (!isInterrupted()) {
                 try {
                     if (stdin.ready()) {

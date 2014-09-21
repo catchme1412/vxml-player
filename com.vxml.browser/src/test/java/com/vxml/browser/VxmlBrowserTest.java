@@ -23,8 +23,9 @@ public class VxmlBrowserTest {
 	public void f() throws VxmlException, URISyntaxException, Event, IOException {
 		vxmlBrowser.setEntryPointUrl("http://localhost:8080/javascript/index.html");
 		VxmlBrowserVerifier verifier = new VxmlBrowserVerifier(vxmlBrowser);
+		verifier.inputDtmf("2");
 		verifier.start();
-		verifier.inputDtmf(2);
+		verifier.inputDtmf("3");
 		Assert.assertEquals(verifier.next(), null);
 		Assert.assertEquals(verifier.isDisconnected(),null);
 	}

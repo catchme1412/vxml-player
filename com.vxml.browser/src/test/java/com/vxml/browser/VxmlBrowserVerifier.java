@@ -1,12 +1,13 @@
 package com.vxml.browser;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import com.vxml.browser.event.Event;
@@ -19,13 +20,13 @@ public class VxmlBrowserVerifier {
 	OutputListener audioEventListener;
 	LinkedBlockingDeque<String> queue;
 	private VxmlBrowser vxmlBrowser;
-	
-	private InputStream dtmfInput;
-	
+
+	private LinkedBlockingDeque<String> keyInputList;
+
 	public VxmlBrowserVerifier(VxmlBrowser vxmlBrowser) throws IOException {
+		keyInputList = new LinkedBlockingDeque<String>();
 		this.vxmlBrowser = vxmlBrowser;
-		dtmfInput =  new ByteArrayInputStream("".getBytes());
-		dtmfInput.reset();
+
 		queue = new LinkedBlockingDeque<String>();
 		audioEventListener = new OutputListener() {
 			@Override
@@ -33,15 +34,15 @@ public class VxmlBrowserVerifier {
 				System.out.println(tag);
 			}
 		};
-		vxmlBrowser.getContext().getEventHandler().register("audio", audioEventListener);
+		VxmlBrowser.getContext().getEventHandler().register("audio", audioEventListener);
 	}
 
 	public void start() throws VxmlException, URISyntaxException, Event {
 		vxmlBrowser.start();
 	}
 
-	public void inputDtmf(int i) {
-//		dtmfInput.
+	public void inputDtmf(String i) {
+		keyInputList.add(i);
 	}
 
 	public String next() {
@@ -61,4 +62,16 @@ public class VxmlBrowserVerifier {
 		return null;
 	}
 
+	class FakeInputStream extends BufferedReader {
+
+		public FakeInputStream(Reader in) {
+			super(in);
+		}
+
+		@Override
+		public String readLine() throws IOException {
+			return keyInputList.pop();
+		}
+
+	}
 }
