@@ -18,7 +18,9 @@ public class EventHandler extends RecursiveAction {
     public EventHandler() {
         eventQueue = new LinkedBlockingDeque<Event>();
         listeners = new ArrayList<EventListener>();
-
+        producer = new Producer(eventQueue);
+        consumer = new Consumer(eventQueue);
+       
     }
 
     public void add(Event outputEvent) {
@@ -35,8 +37,7 @@ public class EventHandler extends RecursiveAction {
     @Override
     protected void compute() {
         System.out.println("Start");
-        producer = new Producer(eventQueue);
-        consumer = new Consumer(eventQueue);
+        
         consumer.fork();
         producer.fork();
         try {
@@ -48,11 +49,12 @@ public class EventHandler extends RecursiveAction {
         }
     }
 
-    public static void main(String[] args) {
+    
+
+    public void start() {
         final ForkJoinPool forkJoinPool = new ForkJoinPool();
-        EventHandler job = new EventHandler();
-        forkJoinPool.invoke(job);
-        job.join();
+        forkJoinPool.invoke(this);
+        this.join();
     }
 
 }

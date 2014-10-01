@@ -18,7 +18,7 @@ public class Producer extends RecursiveTask<Collection<Event>> {
     @Override
     protected Collection<Event> compute() {
         while (!isDone()) {
-            System.out.println("Producer");
+            System.out.print("Producer>");
             Scanner sc = new Scanner(System.in);
             if (sc.hasNext()) {
                 eventQueue.add(new Event());

@@ -18,6 +18,7 @@ public class VxmlExecutionEnvironment {
 	
 	public VxmlExecutionEnvironment() {
 		outputEventHandler = new EventHandler();
+		outputEventHandler.start();
 	}
 	public URI getEntryPointUrl() {
 		return entryPointUrl;

@@ -13,7 +13,7 @@ public class VxmlBrowser {
 	
 	
 	public static void main(String[] args) throws URISyntaxException {
-		String string = "http://localhost:8080/vxmlBrowser/helloWorld.vxml";
+		String string = "http://localhost:8082/vxml.browser/helloWorld.vxml";
 		VxmlBrowser browser = new VxmlBrowser();
 		browser.setEntryPointUrl(string);
 		browser.start();
