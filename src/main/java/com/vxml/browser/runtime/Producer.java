@@ -21,7 +21,7 @@ public class Producer extends RecursiveTask<Collection<Event>> {
             System.out.print("Producer>");
             Scanner sc = new Scanner(System.in);
             if (sc.hasNext()) {
-                eventQueue.add(new Event());
+                eventQueue.add(new Event("input", sc.nextLine()));
             }
         }
         return null;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.RecursiveAction;
 
@@ -20,7 +19,6 @@ public class EventHandler extends RecursiveAction {
         listeners = new ArrayList<EventListener>();
         producer = new Producer(eventQueue);
         consumer = new Consumer(eventQueue);
-       
     }
 
     public void add(Event outputEvent) {
@@ -37,7 +35,7 @@ public class EventHandler extends RecursiveAction {
     @Override
     protected void compute() {
         System.out.println("Start");
-        
+
         consumer.fork();
         producer.fork();
         try {
@@ -48,8 +46,6 @@ public class EventHandler extends RecursiveAction {
             System.exit(-1);
         }
     }
-
-    
 
     public void start() {
         final ForkJoinPool forkJoinPool = new ForkJoinPool();

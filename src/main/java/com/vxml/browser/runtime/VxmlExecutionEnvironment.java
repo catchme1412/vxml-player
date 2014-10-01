@@ -45,7 +45,7 @@ public class VxmlExecutionEnvironment {
 	}
 	
 	public void playTTS(String text) {
-		outputEventHandler.add(new Event());
+		outputEventHandler.add(new Event("tts", text));
 	}
 
 	
